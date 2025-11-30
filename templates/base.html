@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- 문서 유형 선언: HTML5를 사용함을 브라우저에 알림 -->
+    <meta charset="utf-8"/>
+    <!-- Jinja2 블록: 자식 템플릿에서 title 블록을 덮어쓰면 페이지별 제목을 동적으로 설정 가능 -->
+<!--    <link rel="shotcut icon" href="favicon-32x32.png">-->
+    <link rel="icon"
+      type="image/png"
+      href="{{ url_for('static', path='img/fa3.png') }}">
+    <title>서울 아파트 매매가격</title>
+
+    <!-- Bootstrap 5 CSS (CDN)
+         - 빠르게 스타일을 적용하기 위해 CDN 사용
+         - 운영 환경에서는 SRI(Subresource Integrity)와 crossorigin 속성 사용 권장 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!--Swiper-->
+  <link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"></script>
+  <!--ScrollMagic-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
+  <!--Lodash-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
+    <!-- Bootstrap 5 JS 번들(CDN)
+         - Popper 포함 bundle 사용 → 드롭다운/툴팁 등 컴포넌트 동작
+         - 성능상 <body> 끝이나 defer 사용을 고려할 수 있음(의존 스크립트가 없으므로 여기 둬도 무방) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 프로젝트 고유 스타일
+         - uvicorn/Starlette의 StaticFiles로 서빙되는 정적 파일
+         - url_for('static', path=...)는 템플릿 렌더링 시 실제 경로로 치환됨 -->
+
+    <link rel="stylesheet" href="/static/css/main.css">
+<!--Google Fonts - 나눔고딕-->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet" />
+  <!--Google Material Icons-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <!-- 프로젝트 고유 스크립트
+         - 페이지 공통 JS 로직(이벤트 핸들러, 유틸 등)을 모아두는 위치 -->
+    <script src="/static/js/app.js"></script>
+
+    <!-- Google Charts 로더
+         - 구글 차트 사용 시 필수 로더
+         - 페이지 내에서 google.charts.load(), setOnLoadCallback() 패턴으로 사용 -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- Axios (CDN)
+         - 브라우저에서 간편한 HTTP 요청(GET/POST 등)을 위해 사용
+         - fetch를 대체하거나 보완하는 용도 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Jinja2 블록: 하위 템플릿에서 개별 페이지 전용 스크립트를 주입하는 영역
+         - 예: 차트 초기화 스크립트, 페이지 전용 이벤트 바인딩 등 -->
+   {% block scripts %}{% endblock %}
+</head>
+
+<body>
+<header>
+ <div class="inner">
+
+      <a href="/" class="logo">
+        <img src="{{ url_for('static', path='img/황궁 아파트.png') }}" alt="apart" width="150px" />
+      </a>
+
+      <div class="sub-menu">
+        <ul class="menu">
+          <li>
+            <a href="javascript:void(0)">Sign In</a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">My Favorite</a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">Service</a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">Search</a>
+          </li>
+        </ul>
+        <div class="search">
+          <input type="text" />
+          <span class="material-icons">search</span>
+        </div>
+      </div>
+ </div>
+    <ul class="main-menu">
+        <li class="item">
+          <div class="item__name">INTRODUCE</div>
+          <div class="item__contents">
+            <div class="contents__menu">
+              <ul class="inner">
+                <li>
+                  <h4>파이썬</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>파이썬2</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>머신러닝1</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+
+                  </ul>
+                </li>
+                <li>
+                  <h4>머신러닝2</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="contents__texture">
+              <div class="inner">
+                <h4>파이썬</h4>
+                <p>파이썬 기초1</p>
+                <p>파이썬 기초2</p>
+                <h4>러닝머신</h4>
+                <p>머신러닝1</p>
+                <p>머신러닝2</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="item">
+          <div class="item__name">INTRODUCE</div>
+          <div class="item__contents">
+            <div class="contents__menu">
+              <ul class="inner">
+                <li>
+                  <h4>파이썬</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>파이썬2</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>머신러닝1</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+
+                  </ul>
+                </li>
+                <li>
+                  <h4>머신러닝2</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="contents__texture">
+              <div class="inner">
+                <h4>파이썬</h4>
+                <p>파이썬 기초1</p>
+                <p>파이썬 기초2</p>
+                <h4>러닝머신</h4>
+                <p>머신러닝1</p>
+                <p>머신러닝2</p>
+              </div>
+            </div>
+          </div>
+        </li><li class="item">
+          <div class="item__name">INTRODUCE</div>
+          <div class="item__contents">
+            <div class="contents__menu">
+              <ul class="inner">
+                <li>
+                  <h4>파이썬</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>파이썬2</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>머신러닝1</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+
+                  </ul>
+                </li>
+                <li>
+                  <h4>머신러닝2</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="contents__texture">
+              <div class="inner">
+                <h4>파이썬</h4>
+                <p>파이썬 기초1</p>
+                <p>파이썬 기초2</p>
+                <h4>러닝머신</h4>
+                <p>머신러닝1</p>
+                <p>머신러닝2</p>
+              </div>
+            </div>
+          </div>
+        </li><li class="item">
+          <div class="item__name">INTRODUCE</div>
+          <div class="item__contents">
+            <div class="contents__menu">
+              <ul class="inner">
+                <li>
+                  <h4>파이썬</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>파이썬2</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>머신러닝1</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+
+                  </ul>
+                </li>
+                <li>
+                  <h4>머신러닝2</h4>
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbb</li>
+                    <li>ccc</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="contents__texture">
+              <div class="inner">
+                <h4>파이썬</h4>
+                <p>파이썬 기초1</p>
+                <p>파이썬 기초2</p>
+                <h4>러닝머신</h4>
+                <p>머신러닝1</p>
+                <p>머신러닝2</p>
+              </div>
+            </div>
+          </div>
+        </li>
+
+    </ul>
+
+
+</header>
+
+<main>
+    <!-- Jinja2 블록: 페이지별 본문 콘텐츠
+         - 모든 자식 템플릿이 이 영역을 오버라이드하여 개별 UI를 렌더링 -->
+<!--    {% block content %}{% endblock %}-->
+</main>
+
+<!-- (선택) 성능 팁:
+     - 큰 스크립트는 가능하면 body 하단 배치 또는 defer 속성으로 비차단 로딩을 고려
+     - 외부 CDN 사용 시 네트워크 정책에 맞게 SRI/버전 고정/캐시 정책 검토 -->
+
+</body>
+</html>
