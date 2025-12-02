@@ -21,6 +21,10 @@ img {
   margin: 0 auto;
   position: relative;
 
+
+}
+.inner .logo{
+
 }
 
 /*BUTTON
@@ -114,10 +118,10 @@ header {
   border-bottom: 1px solid #c8c8c8;
 }
 header > .inner {
-  height: 120px;
+  height: 140px;
 }
 header .logo {
-  height: 75px;
+
   position: absolute;
   top: 0;
   bottom: 0;
