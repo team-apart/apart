@@ -32,15 +32,15 @@
          - uvicorn/Starlette의 StaticFiles로 서빙되는 정적 파일
          - url_for('static', path=...)는 템플릿 렌더링 시 실제 경로로 치환됨 -->
 
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/main.css" />
 <!--Google Fonts - 나눔고딕-->
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet" />
-  <!--Google Material Icons-->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <!-- 프로젝트 고유 스크립트
-         - 페이지 공통 JS 로직(이벤트 핸들러, 유틸 등)을 모아두는 위치 -->
-    <script src="/static/js/app.js"></script>
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet" />
+      <!--Google Material Icons-->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <!-- 프로젝트 고유 스크립트
+             - 페이지 공통 JS 로직(이벤트 핸들러, 유틸 등)을 모아두는 위치 -->
+    <script src="/static/js/app.js" defer></script>
 
     <!-- Google Charts 로더
          - 구글 차트 사용 시 필수 로더
@@ -81,48 +81,65 @@
           </li>
         </ul>
         <div class="search">
-          <input type="text" />
+          <input class="input" type="text" name="search"/>
           <span class="material-icons">search</span>
         </div>
       </div>
  </div>
     <ul class="main-menu">
         <li class="item">
-          <div class="item__name">INTRODUCE</div>
+          <div class="item__name">권역별 구분</div>
           <div class="item__contents">
             <div class="contents__menu">
               <ul class="inner">
                 <li>
-                  <h4>파이썬</h4>
+                  <h4 class="region"><a href="#" onclick="addRegion('city');return false">도심권</a></h4>
                   <ul>
-                    <li>aaa</li>
-                    <li>bbb</li>
-                    <li>ccc</li>
+                    <li>용산<input type="checkbox" value="용산" class="city" onchange="selectGU('용산');return false"></li>
+                    <li>종로<input type="checkbox" value="종로" class="city" onchange="selectGU('종로');return false"></li>
+                    <li>중구<input type="checkbox" value="중구" class="city" onchange="selectGU('중구');return false"></li>
                   </ul>
                 </li>
                 <li>
-                  <h4>파이썬2</h4>
+                  <h4 class="region"><a href="#" onclick="addRegion('es');return false">동남권</a></h4>
                   <ul>
-                    <li>aaa</li>
-                    <li>bbb</li>
-                    <li>ccc</li>
+                    <li>강남<input type="checkbox" value="강남" class="es" onchange="selectGU('강남');return false"></li>
+                    <li>강동<input type="checkbox" value="강동" class="es" onchange="selectGU('강동');return false"></li>
+                    <li>서초<input type="checkbox" value="서초" class="es" onchange="selectGU('서초');return false"></li>
+                    <li>송파<input type="checkbox" value="송파" class="es" onchange="selectGU('송파');return false"></li>
                   </ul>
                 </li>
                 <li>
-                  <h4>머신러닝1</h4>
+                  <h4 class="region"><a href="#" onclick="addRegion('en');return false">동북권</a></h4>
                   <ul>
-                    <li>aaa</li>
-                    <li>bbb</li>
-                    <li>ccc</li>
+                    <li>강북<input type="checkbox" value="강북" class="en" onchange="selectGU('강북');return false"></li>
+                    <li>광진<input type="checkbox" value="광진" class="en" onchange="selectGU('광진');return false"></li>
+                    <li>노원<input type="checkbox" value="노원" class="en" onchange="selectGU('노원');return false"></li>
+                    <li>도봉<input type="checkbox" value="도봉" class="en" onchange="selectGU('도봉');return false"></li>
+                    <li>동대문<input type="checkbox" value="동대문" class="en" onchange="selectGU('동대문');return false"></li>
+                    <li>성동<input type="checkbox" value="성동" class="en" onchange="selectGU('성동');return false"></li>
+                    <li>성북<input type="checkbox" value="성북" class="en" onchange="selectGU('성북');return false"></li>
+                    <li>중랑<input type="checkbox" value="중랑" class="en" onchange="selectGU('중랑');return false"></li>
+                   </ul>
+                </li>
+                <li>
+                  <h4 class="region"><a href="#" onclick="addRegion('wn');return false">서북권</a></h4>
+                  <ul>
+                    <li>마포<input type="checkbox" value="마포" class="wn" onchange="selectGU('마포');return false"></li>
+                    <li>서대문<input type="checkbox" value="서대문" class="wn" onchange="selectGU('서대문');return false"></li>
+                    <li>은평<input type="checkbox" value="은평" class="wn" onchange="selectGU('은평');return false"></li>
+                  </ul>
+                    </li>
+                  <li>
+                    <h4 class="region"><a href="#" onclick="addRegion('ws');return false">서남권</a></h4>
+                  <ul>
+                    <li>강서<input type="checkbox" value="강서" class="ws" onchange="selectGU('강서');return false"></li>
+                    <li>구로<input type="checkbox" value="구로" class="ws" onchange="selectGU('구로');return false"></li>
+                    <li>금천<input type="checkbox" value="금천" class="ws" onchange="selectGU('금천');return false"></li>
+                    <li>동작<input type="checkbox" value="동작" class="ws" onchange="selectGU('동작');return false"></li>
+                    <li>양천<input type="checkbox" value="양천" class="ws" onchange="selectGU('양천');return false"></li>
+                    <li>영등포<input type="checkbox" value="영등포" class="ws" onchange="selectGU('영등포');return false"></li>
 
-                  </ul>
-                </li>
-                <li>
-                  <h4>머신러닝2</h4>
-                  <ul>
-                    <li>aaa</li>
-                    <li>bbb</li>
-                    <li>ccc</li>
                   </ul>
                 </li>
               </ul>

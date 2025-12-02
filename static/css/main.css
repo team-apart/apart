@@ -167,6 +167,7 @@ header .sub-menu ul.menu li a:hover {
 header .sub-menu .search {
   position: relative;
   height: 34px;
+  cursor:pointer;
 }
 header .sub-menu .search input {
   width: 36px;
@@ -237,13 +238,13 @@ header .main-menu .item .item__contents .contents__menu > ul > li {
 }
 header .main-menu .item .item__contents .contents__menu > ul > li h4 {
   padding: 3px 0 12px 0;
-  font-size: 14px;
+  font-size: 22px;
   color: #fff;
 }
 header .main-menu .item .item__contents .contents__menu > ul > li ul li {
   padding: 5px 0;
-  font-size: 12px;
-  color: #999;
+  font-size: 20px;
+  color: #fff;
   cursor: pointer;
 }
 header .main-menu .item .item__contents .contents__menu > ul > li ul li:hover {
@@ -252,7 +253,7 @@ header .main-menu .item .item__contents .contents__menu > ul > li ul li:hover {
 header .main-menu .item .item__contents .contents__texture {
   padding: 26px 0;
   font-size: 12px;
-  background-image: url("../images/main_menu_pattern.jpg");
+  /*background-image: url("../imageges/main_menu_pattern.jpg");*/
 }
 header .main-menu .item .item__contents .contents__texture h4 {
   color: #999;
