@@ -2,6 +2,7 @@
 const searchEl = document.querySelector('.search');
 const searchInputEl = document.querySelector('.input');
 const regionEl=document.querySelector('.region')
+const select=document.querySelector('.select')
 //// 검색창 요소를 클릭하면 실행.
 searchEl.addEventListener('click', function () {
   searchInputEl.focus();
@@ -89,12 +90,15 @@ if(!selectedGu.includes(gu)){
 // console.log(selectedGu)
 
 }
+
+//
 // console.log(selectedGu)
 const results=selectedGu.map(gu=>dongs.filter(dong=>dong.name===gu))
 
 results.map(result=>result.map(re=>{tableValues.push(re)}))
 console.log(tableValues)
 createTable(tableValues)
+
 }
 function createTable(values){
 const table=document.querySelector('table')
@@ -104,8 +108,9 @@ const tag=values.map(value=>{
     const tr=document.createElement('tr')
     const td=document.createElement('td')
     const image=document.createElement('img')
-    image.src="/static/img/mascot/"+value.name+"구.png"
-    image.style.width="200px"
+
+    image.src="/static/img/mascot/"+value.name+"구.png";
+    image.style.width="200px";
     td.style.fontSize="20px"
     td.style.border="2px solid black"
     td.style.height="200px";
@@ -114,22 +119,33 @@ const tag=values.map(value=>{
     td.innerText=value.name
     td.append(image)
     tr.append(td)
+    const dongname=document.createElement('td')
+    dongname.style.verticalAlign="top";
+    dongname.style.display="flex";
+    dongname.style.justifyContent="flex-start";
+    dongname.style.alignItems="flex-start"
+    dongname.style.width='800px';
+    dongname.style.flexWrap="wrap"
 
     value.dong.map(don=>{
-    const td=document.createElement('td')
-    td.style.border="1px dashed red"
-    td.style.padding="3px"
-    td.style.verticalAlign="top"
-    td.style.textAlign="center"
-    td.innerText=don
-    tr.append(td)
+    const div=document.createElement('div');
+    div.classList.add('dong')
+    div.style.padding="5px 10px";
+    div.style.margin="0 5px;"
+    div.innerText=don;
+    dongname.append(div);
+    tr.append(dongname);
+    div.addEventListener('click',()=>{
+        if(div.classList.contains('selected')){
+            div.classList.remove(('selected'))
+        }else{
+            div.classList.add('selected')
+        }
     })
-
+    })
     tbody.append(tr)
-
     })
 
 table.append(tag)
-//tbody.style.border="1px solid black"
-
+    select.classList.add('display')
 }

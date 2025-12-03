@@ -5,35 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d567c917-d8e9-43eb-bfae-d10e3fa91cf8" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/강남구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/강동구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/강북구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/강서구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/관악구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/광진구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/구로구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/금천구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/노원구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/도봉구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/동대문구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/동작구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/마포구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/서대문구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/서울특별시 해치.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/서초구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/성동구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/성북구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/송파구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/양천구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/영등포구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/용산구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/은평구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/종로구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/중구.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/mascot/중랑구.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/fastapi-simple-bbs+chart.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fastapi-simple-bbs+chart.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
@@ -41,6 +16,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -63,13 +45,19 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "apt__ksh",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/pc/Desktop/project_apt/apart/static/img/mascot"
+    "last_opened_file_path": "C:/Users/berse/Desktop/apart",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -83,7 +71,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-164cda30dcd9-0af03a5fa574-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26830.99" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-PY-252.28238.29" />
+        <option value="bundled-python-sdk-a101402ee41c-968fe969f28a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.28238.29" />
       </set>
     </attachedChunks>
   </component>
@@ -94,8 +83,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1764396760894</updated>
+      <workItem from="1764754779789" duration="18000" />
+      <workItem from="1764754799282" duration="66000" />
+      <workItem from="1764754921919" duration="60000" />
+      <workItem from="1764765124197" duration="6431000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="RECENT_FILTERS">
