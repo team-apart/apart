@@ -5,6 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d567c917-d8e9-43eb-bfae-d10e3fa91cf8" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/강남구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/강동구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/강북구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/강서구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/관악구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/광진구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/구로구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/금천구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/노원구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/도봉구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/동대문구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/동작구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/마포구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/서대문구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/서울특별시 해치.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/서초구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/성동구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/성북구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/송파구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/양천구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/영등포구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/용산구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/은평구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/종로구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/중구.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/mascot/중랑구.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/fastapi-simple-bbs+chart.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fastapi-simple-bbs+chart.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -43,11 +69,13 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "apt__ksh",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/codelab/project/apart"
+    "last_opened_file_path": "C:/Users/pc/Desktop/project_apt/apart/static/img/mascot"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pc\Desktop\project_apt\apart\static\img\mascot" />
+      <recent name="C:\Users\pc\Desktop\project_apt\apart\static\img" />
       <recent name="C:\Users\berse\OneDrive\Desktop\fastapi-simple-bbs+chart\static\img" />
       <recent name="C:\Users\berse\OneDrive\Desktop\fastapi-simple-bbs+chart" />
     </key>
@@ -55,7 +83,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
+        <option value="bundled-python-sdk-164cda30dcd9-0af03a5fa574-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26830.99" />
       </set>
     </attachedChunks>
   </component>
