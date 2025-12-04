@@ -3,6 +3,7 @@ const searchEl = document.querySelector('.search');
 const searchInputEl = document.querySelector('.input');
 const regionEl=document.querySelector('.region')
 const select=document.querySelector('.select')
+//const table=document.querySelector('table')
 //// 검색창 요소를 클릭하면 실행.
 searchEl.addEventListener('click', function () {
   searchInputEl.focus();
@@ -11,7 +12,7 @@ searchEl.addEventListener('click', function () {
 // 검색창 요소 내부 실제 input 요소에 포커스되면 실행.
 searchInputEl.addEventListener('focus', function () {
   searchEl.classList.add('focused')
-  searchInputEl.setAttribute('placeholder', '통합검색')
+  searchInputEl.setAttribute('placeholder', '구, 동, 아파트명 검색')
 })
 // 검색창 요소 내부 실제 input 요소에서 포커스가 해제(블러)되면 실행.
 searchInputEl.addEventListener('blur', function () {
@@ -78,47 +79,53 @@ const cities=Object.values(document.querySelectorAll('.'+city+''))
 selectedGu.forEach(key=>console.log(key))
 }
 const tableValues=[]
+
 function selectGU(gu){
 //const id=selectedGu.indexOf(gu)
 //console.log(id)
 if(!selectedGu.includes(gu)){
         selectedGu.push(gu)
-//         console.log(selectedGu)
-//    console.log('입력',selectedGu)
     }else{
     selectedGu.splice(selectedGu.indexOf(gu),1)
-// console.log(selectedGu)
-
 }
 
-//
-// console.log(selectedGu)
+
 const results=selectedGu.map(gu=>dongs.filter(dong=>dong.name===gu))
 
 results.map(result=>result.map(re=>{tableValues.push(re)}))
-console.log(tableValues)
-createTable(tableValues)
+//console.log(tableValues)
+//select.innerHTML=""
+//
+//createTable(tableValues)
 
 }
-function createTable(values){
-const table=document.querySelector('table')
-const tbody=table.querySelector('tbody')
-const tag=values.map(value=>{
+function selectedCommit(){
 
+select.innerHTML=""
+createTable(tableValues)
+}
+
+function createTable(values){
+const table=document.createElement('table')
+const tbody=document.createElement('tbody')
+
+const tag=values.map(value=>{
     const tr=document.createElement('tr')
     const td=document.createElement('td')
-    const image=document.createElement('img')
 
-    image.src="/static/img/mascot/"+value.name+"구.png";
-    image.style.width="200px";
+    const image=document.createElement('img')
     td.style.fontSize="20px"
     td.style.border="2px solid black"
     td.style.height="200px";
     td.style.width="200px";
     td.style.textAlign="center"
     td.innerText=value.name
+
+    image.src="/static/img/mascot/"+value.name+"구.png";
+    image.style.width="200px";
     td.append(image)
     tr.append(td)
+
     const dongname=document.createElement('td')
     dongname.style.verticalAlign="top";
     dongname.style.display="flex";
@@ -127,7 +134,7 @@ const tag=values.map(value=>{
     dongname.style.width='800px';
     dongname.style.flexWrap="wrap"
 
-    value.dong.map(don=>{
+    value.dong.forEach(don=>{
     const div=document.createElement('div');
     div.classList.add('dong')
     div.style.padding="5px 10px";
@@ -135,17 +142,19 @@ const tag=values.map(value=>{
     div.innerText=don;
     dongname.append(div);
     tr.append(dongname);
+
+
     div.addEventListener('click',()=>{
         if(div.classList.contains('selected')){
             div.classList.remove(('selected'))
         }else{
             div.classList.add('selected')
-        }
+            }
+            })
     })
-    })
-    tbody.append(tr)
-    })
-
-table.append(tag)
+    tbody.append(tr);
+    table.append(tbody)
+    select.append(table)
     select.classList.add('display')
+    })
 }
