@@ -2,7 +2,20 @@
 const searchEl = document.querySelector('.search');
 const searchInputEl = document.querySelector('.input');
 const regionEl=document.querySelector('.region')
-const select=document.querySelector('.select')
+
+const selectDong=document.querySelector('.selectDong')
+const dongTable=document.querySelector('.dongTable')
+const dongTbody=dongTable.querySelector('.dongTbody')
+
+const selectApart=document.querySelector('.selectApart')
+const apartTable=document.querySelector('.apartTable')
+const apartTbody=apartTable.querySelector('.apartTbody')
+
+const goNext=document.querySelector('.goNext')
+const left=goNext.querySelector('.leftArrow')
+const leftBtn=left.querySelector('img')
+const right=goNext.querySelector('.rightArrow')
+const righttBtn=right.querySelector('img')
 //const table=document.querySelector('table')
 //// 검색창 요소를 클릭하면 실행.
 searchEl.addEventListener('click', function () {
@@ -18,6 +31,15 @@ searchInputEl.addEventListener('focus', function () {
 searchInputEl.addEventListener('blur', function () {
   searchEl.classList.remove('focused')
   searchInputEl.setAttribute('placeholder', '')
+})
+
+left.addEventListener('click',function(){
+selectApart.classList.remove('display')
+selectDong.classList.add('display')
+})
+right.addEventListener('click',function(){
+selectDong.classList.remove('display')
+selectApart.classList.add('display')
 })
 const selectedGu=[]
 const selectedDong=[]
@@ -63,8 +85,6 @@ const dongs=
 
 function addRegion(city){
 const cities=Object.values(document.querySelectorAll('.'+city+''))
-
-
     cities.map(city=>{
     if(!selectedGu.includes(city.value)){
         selectedGu.push(city.value)
@@ -75,44 +95,27 @@ const cities=Object.values(document.querySelectorAll('.'+city+''))
     selectedGu.splice(selectedGu.indexOf(city.value),1)
     city.checked=false
     }
-})
-selectedGu.forEach(key=>console.log(key))
-}
-const tableValues=[]
+})}
 
 function selectGU(gu){
-//const id=selectedGu.indexOf(gu)
-//console.log(id)
 if(!selectedGu.includes(gu)){
-        selectedGu.push(gu)
+    selectedGu.push(gu)
     }else{
     selectedGu.splice(selectedGu.indexOf(gu),1)
-}
-
-
-const results=selectedGu.map(gu=>dongs.filter(dong=>dong.name===gu))
-
-results.map(result=>result.map(re=>{tableValues.push(re)}))
-//console.log(tableValues)
-//select.innerHTML=""
-//
-//createTable(tableValues)
-
-}
+}}
 function selectedCommit(){
-
-select.innerHTML=""
-createTable(tableValues)
+    const tableValues=[];
+    dongTbody.innerHTML="";
+    console.log('tableValues',tableValues)
+    const results=selectedGu.map(gu=>dongs.filter(dong=>dong.name===gu))
+    results.forEach(result=>result.forEach(re=>{tableValues.push(re)}))
+    createTable(tableValues)
 }
 
 function createTable(values){
-const table=document.createElement('table')
-const tbody=document.createElement('tbody')
-
-const tag=values.map(value=>{
+    const tag=values.map(value=>{
     const tr=document.createElement('tr')
     const td=document.createElement('td')
-
     const image=document.createElement('img')
     td.style.fontSize="20px"
     td.style.border="2px solid black"
@@ -120,12 +123,10 @@ const tag=values.map(value=>{
     td.style.width="200px";
     td.style.textAlign="center"
     td.innerText=value.name
-
     image.src="/static/img/mascot/"+value.name+"구.png";
     image.style.width="200px";
     td.append(image)
     tr.append(td)
-
     const dongname=document.createElement('td')
     dongname.style.verticalAlign="top";
     dongname.style.display="flex";
@@ -133,7 +134,6 @@ const tag=values.map(value=>{
     dongname.style.alignItems="flex-start"
     dongname.style.width='800px';
     dongname.style.flexWrap="wrap"
-
     value.dong.forEach(don=>{
     const div=document.createElement('div');
     div.classList.add('dong')
@@ -143,7 +143,6 @@ const tag=values.map(value=>{
     dongname.append(div);
     tr.append(dongname);
 
-
     div.addEventListener('click',()=>{
         if(div.classList.contains('selected')){
             div.classList.remove(('selected'))
@@ -152,9 +151,18 @@ const tag=values.map(value=>{
             }
             })
     })
-    tbody.append(tr);
-    table.append(tbody)
-    select.append(table)
-    select.classList.add('display')
+
+    apartTbody.append(tr);
+    apartTable.append(apartTbody)
+    selectApart.append(apartTable)
+
+    dongTbody.append(tr);
+    dongTable.append(dongTbody)
+    selectDong.append(dongTable)
+
+
+
+    selectDong.classList.add('display')
+    selectApart.classList.remove('display')
     })
 }
