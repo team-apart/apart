@@ -3,12 +3,24 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from starlette.responses import HTMLResponse, RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
+from collections import defaultdict
+
+
+from websockets.sync.client import connect_socks_proxy
+
 import bbs_db as db
 import chart_db as ch
 
 # FastAPI 앱 인스턴스 생성
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # 정적 파일 제공 (CSS/JS/이미지)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -20,6 +32,29 @@ templates = Jinja2Templates(directory="templates")
 #@app.get("/")
 def read_root():
     return {"message": "Hello FastAPI!"}
+
+
+@app.get('/getDongs')
+def get_dongs():
+    data=db.get_dongs();
+    print(data)
+    result_dict=defaultdict(list)
+    for item in data:
+        result_dict[item["guName"]].append(item["dongName"])
+    result=[{"name":guName,"dong":dongName} for guName,dongName in result_dict.items()]
+    return result
+
+@app.get('/getApart')
+def get_Apart():
+    data=db.get_apart();
+    result_dict=defaultdict(list)
+    for item in data:
+        result_dict[item["dongName"]].append(item["aptName"])
+    result=[{"name":dongName,"apart":aptName} for dongName,aptName in result_dict.items()]
+    print(data)
+    return result
+
+
 
 # 경로 파라미터 예시
 @app.get("/items/{item_id}")

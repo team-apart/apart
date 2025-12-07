@@ -283,8 +283,15 @@ header .main-menu .item .item__contents .contents__texture p {
 /*SELECT */
 main{
     margin:0 auto;
-
-
+}
+main .status{
+position:absolute;
+left:50%;
+top:50%;
+transform:translateX(-50%);
+transform:translateY(-50%);
+font-size:10rem;
+color:gray;
 }
 main .selectForm{
     display:flex;

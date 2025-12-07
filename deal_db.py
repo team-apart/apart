@@ -8,9 +8,9 @@ def deal_count():
     try:
         # 2. db연결(url(ip+port), id/pw, db명)
         con = mysql.connect(host='localhost',
-                            port=3307,
+                            port=3338,
                             user='root',
-                            password='1234',
+                            password='1212',
                             db='deal_db',
                             cursorclass=DictCursor
                             )
