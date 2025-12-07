@@ -6,6 +6,69 @@ import pymysql as mysql
 from pymysql import IntegrityError
 from pymysql.cursors import DictCursor
 
+def get_dongs():
+    try:
+        con = mysql.connect(
+            host='localhost',
+            port=3338,
+            user='root',
+            password='1212',
+            db='apart',
+            cursorclass=DictCursor
+        )
+        cursor = con.cursor()
+     # 3. sql문 작성한 후 sql문을 db서버에 보내자.
+        sql = "select gu.guName,dong.dongName from gu inner join dong on gu.guId=dong.guId"
+        result = cursor.execute(sql);
+        print(result); # insert, update, delete의 결과는 정수값!
+        # 실행된 결과의 행수(레코드 개수)
+        if result >= 1 :
+            print("동 검색 성공!!! ")
+            rows = cursor.fetchall();
+
+
+        # 4. 보낸 sql문을 바로 실행해줘(반영해줘.)
+        con.commit();
+
+        # 5. 커넥션 close
+        con.close();
+    except IntegrityError as ie:
+        print("무결성 에러 발생함.")
+        print(ie)  # 에러 정보 출력
+    return rows
+
+def get_apart():
+    try:
+        con = mysql.connect(
+            host='localhost',
+            port=3338,
+            user='root',
+            password='1212',
+            db='apart',
+            cursorclass=DictCursor
+        )
+        cursor = con.cursor()
+     # 3. sql문 작성한 후 sql문을 db서버에 보내자.
+        sql = "select dong.dongName,apart.aptName from dong inner join apart on dong.dongId=apart.dongId"
+
+
+        result = cursor.execute(sql);
+        print(result); # insert, update, delete의 결과는 정수값!
+        # 실행된 결과의 행수(레코드 개수)
+        if result >= 1 :
+            print("아파트 검색 성공!!! ")
+            rows = cursor.fetchall();
+
+        # 4. 보낸 sql문을 바로 실행해줘(반영해줘.)
+        con.commit();
+
+        # 5. 커넥션 close
+        con.close();
+    except IntegrityError as ie:
+        print("무결성 에러 발생함.")
+        print(ie)  # 에러 정보 출력
+    return rows
+
 def create(data):
     try :
         # 2. db연결(url(ip+port), id/pw, db명)
@@ -94,7 +157,7 @@ def read_all():
         rows = cursor.fetchall(); #전체 목록 다
         # rows = cursor.fetchmany(2); #전체 목록 중 2개만
         for row in rows:
-            print(row)
+            print('row',row)
         # 4. 보낸 sql문을 바로 실행해줘(반영해줘.)
         con.commit();
 
