@@ -51,9 +51,18 @@ def get_Apart():
     for item in data:
         result_dict[item["dongName"]].append(item["aptName"])
     result=[{"name":dongName,"apart":aptName} for dongName,aptName in result_dict.items()]
-    print(data)
     return result
 
+@app.get('/getDeals')
+def get_Deal():
+    data=db.get_deal()
+    print(data)
+    result_dict=defaultdict(list)
+    # for item in data:
+    #     result_dict[item["dongName"]].append(item["aptName"])
+    # result=[{"name":dongName,"apart":aptName} for dongName,aptName in result_dict.items()]
+
+    # return result
 
 
 # 경로 파라미터 예시
