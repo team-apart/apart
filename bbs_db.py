@@ -10,7 +10,7 @@ def get_dongs():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3338,
+            port=3336,
             user='root',
             password='1212',
             db='apart',
@@ -41,7 +41,7 @@ def get_apart():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3338,
+            port=3336,
             user='root',
             password='1212',
             db='apart',

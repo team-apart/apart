@@ -16,7 +16,7 @@ const goNext=document.querySelector('.goNext')
 const left=goNext.querySelector('.leftArrow')
 const leftBtn=left.querySelector('img')
 const right=goNext.querySelector('.rightArrow')
-const righttBtn=right.querySelector('img')
+const rightBtn=right.querySelector('img')
 const status=document.querySelector('.status')
 //const table=document.querySelector('table')
 //// 검색창 요소를 클릭하면 실행.
@@ -34,20 +34,26 @@ searchInputEl.addEventListener('blur', function () {
   searchEl.classList.remove('focused')
   searchInputEl.setAttribute('placeholder', '')
 })
-if(status){
-goNext.style="none"
-}
-left.addEventListener('click',function(){
+
+leftBtn.addEventListener('click',function(){
     selectApart.classList.remove('display')
     selectDong.classList.add('display')
-    status.innerText=1
+    if(status.innerHTML>0)status.innerHTML-=1
+    if(status.innerHTML<1) {
+        alert('left')
+        selectApart.classList.remove('display')
+    }
+
 })
-right.addEventListener('click',function(){
-selectDong.classList.remove('display')
-selectApart.classList.add('display')
+rightBtn.addEventListener('click',function(){
+    selectDong.classList.remove('display')
+    selectApart.classList.add('display')
+    if(status.innerHTML<3)status.innerHTML=1+parseInt(status.innerHTML)
+
 })
 const selectedGu=[]
 const selectedDong=[]
+const selectedApart=[]
 
 
 function addRegion(city){
@@ -77,18 +83,20 @@ if(!selectedDong.includes(dong)){
     }else{
     selectedDong.splice(selectedDong.indexOf(dong),1)
 }}
-
+function selectAPT(apt){
+if(!selectedApart.includes(apt)){
+    selectedApart.push(apt)
+    }else{
+    selectedGu.splice(selectedApart.indexOf(apt),1)
+}}
 async function selectedDongCommit(){
- status.innerText=1
+    status.innerText=1
     const tableValues=[];
     dongTbody.innerHTML="";
 //    console.log('tableValues',tableValues)
 try{
     const dongs=await axios.get('http://localhost:8000/getDongs')
-//    console.log('new_dongs',dongs.data)
     const results=selectedGu.map(gu=>dongs.data.filter(dong=>dong.name===gu))
-//    console.log('results',results.data)
-//     console.log('new_dongs',new_dongs.data)
     results.forEach(result=>result.forEach(re=>{tableValues.push(re)}))
     createDongTable(tableValues)
 }catch(e){console.error(e)}
@@ -137,9 +145,6 @@ function createDongTable(values){
             })
     })
 
-//    apartTbody.append(tr);
-//    apartTable.append(apartTbody)
-//    selectApart.append(apartTable)
 
     dongTbody.append(tr);
     dongTable.append(dongTbody)
@@ -151,7 +156,7 @@ function createDongTable(values){
 
 
 async function selectedApartCommit(){
-    status.innerText=2
+    // status.innerText=2
     const tableValues=[];
     apartTbody.innerHTML="";
     console.log('selectedDong',selectedDong)
@@ -198,23 +203,21 @@ function createApartTable(values){
     div.innerText=apt.replace(value.name,"");
     dongname.append(div);
     tr.append(dongname);
-
     div.addEventListener('click',()=>{
         if(div.classList.contains('selected')){
             div.classList.remove(('selected'))
+            selectedDong.splice(selectedDong.indexOf(apt),1)
         }else{
             div.classList.add('selected')
+            selectAPT(apt)
             }
             })
     })
-
+console.log('aparts',selectedApart)
     apartTbody.append(tr);
     apartTable.append(apartTbody)
     selectApart.append(apartTable)
 
-//    dongTbody.append(tr);
-//    dongTable.append(dongTbody)
-//    selectDong.append(dongTable)
 
 
 

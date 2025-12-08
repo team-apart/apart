@@ -16,7 +16,7 @@ import chart_db as ch
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:8000","http://127.0.0.1:8000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,7 +41,7 @@ def get_dongs():
     result_dict=defaultdict(list)
     for item in data:
         result_dict[item["guName"]].append(item["dongName"])
-    result=[{"name":guName,"dong":dongName} for guName,dongName in result_dict.items()]
+    result=[{"name":guName.replace("\r",""),"dong":dongName} for guName,dongName in result_dict.items()]
     return result
 
 @app.get('/getApart')
