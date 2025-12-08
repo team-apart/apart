@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d567c917-d8e9-43eb-bfae-d10e3fa91cf8" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/fastapi-simple-bbs+chart.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fastapi-simple-bbs+chart.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bbs_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/bbs_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deal_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/deal_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
@@ -89,6 +89,9 @@
       <workItem from="1764754799282" duration="66000" />
       <workItem from="1764754921919" duration="60000" />
       <workItem from="1764765124197" duration="6431000" />
+      <workItem from="1765162980596" duration="1824000" />
+      <workItem from="1765174181342" duration="1733000" />
+      <workItem from="1765185725868" duration="3591000" />
     </task>
     <servers />
   </component>

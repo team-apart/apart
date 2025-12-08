@@ -69,6 +69,72 @@ def get_apart():
         print(ie)  # 에러 정보 출력
     return rows
 
+
+def get_deal():
+    try:
+        con = mysql.connect(
+            host='localhost',
+            port=3338,
+            user='root',
+            password='1212',
+            db='apart',
+            cursorclass=DictCursor
+        )
+        cursor = con.cursor()
+     # 3. sql문 작성한 후 sql문을 db서버에 보내자.
+     #    sql = "select dong.dongName,apart.aptName from dong inner join apart on dong.dongId=apart.dongId"
+
+        sql="""
+            SELECT
+            gu.guId,
+            dong.dongId,
+            apart.aptName,
+            YEAR(deal.dealDate) AS year,
+            MONTH(deal.dealDate) AS month,
+            deal.area,
+            AVG(ROUND(deal.dealAmount, 1)) AS average
+            FROM gu
+            JOIN dong ON gu.guId = dong.guId
+            JOIN deal ON dong.dongId = deal.dongId
+            JOIN apart ON dong.dongId = apart.dongId
+
+            WHERE gu.guId = 20
+              AND dong.dongId = 46
+              AND deal.area = 18
+
+            GROUP BY
+                gu.guId,
+                dong.dongId,
+                apart.aptName,
+                YEAR(deal.dealDate),
+                MONTH(deal.dealDate),
+                deal.area
+            ORDER BY
+                apart.aptName,
+                YEAR(deal.dealDate),
+                MONTH(deal.dealDate),
+                deal.area
+                """
+
+        result = cursor.execute(sql);
+        print(result); # insert, update, delete의 결과는 정수값!
+        # 실행된 결과의 행수(레코드 개수)
+        if result >= 1 :
+            print("아파트 검색 성공!!! ")
+            rows = cursor.fetchall();
+
+        # 4. 보낸 sql문을 바로 실행해줘(반영해줘.)
+        con.commit();
+
+        # 5. 커넥션 close
+        con.close();
+    except IntegrityError as ie:
+        print("무결성 에러 발생함.")
+        print(ie)  # 에러 정보 출력
+    return rows
+
+
+# ----------------------------------------------------------
 def create(data):
     try :
         # 2. db연결(url(ip+port), id/pw, db명)
