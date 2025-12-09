@@ -255,15 +255,16 @@ async function selectedDealCommit(){
     dealTbody.innerHTML="";
 
 try{
-    const deals=await axios.get('http://localhost:8000/getDeals')
-    console.log('deals',deals)
+
+    const deals=await axios.post('http://localhost:8000/getDeals',selectedApart)
+    totaldeals=deals['data']
 //    const results=selectedApart.map(apt=>deals.data.filter(deal=>deal.aptName.replace(deal.dongName,"")===apt))
 //
 //
 //    console.log('results',results)
 //    results.forEach(result=>result.forEach(re=>{tableValues.push(re)}))
 //    console('tableValues',tableValues)
-//    createDealTable(tableValues)
+    createDealTable(totaldeals)
 }catch(e){console.error(e)}
 }
 //------------------------------------------------------------------------------
@@ -278,11 +279,13 @@ function createDealTable(values){
     td.style.height="200px";
     td.style.width="200px";
     td.style.textAlign="center"
-    td.innerText=value.name
+    td.innerText=value.apart.replace(value.dongName,"")+value.area+"평형"///////////////////////////////////////동 입력
 //    image.src="/static/img/mascot/"+value.name+".png";
     image.style.width="200px";
     td.append(image)
     tr.append(td)
+
+
     const dongname=document.createElement('td')
     dongname.style.verticalAlign="top";
     dongname.style.display="flex";
@@ -290,34 +293,56 @@ function createDealTable(values){
     dongname.style.alignItems="flex-start"
     dongname.style.width='800px';
     dongname.style.flexWrap="wrap"
-    value.apart.forEach(apt=>{
-    const div=document.createElement('div');
-    div.classList.add('dong')
-    div.style.padding="5px 10px";
-    div.style.margin="0 5px;"
-    div.innerText=apt.replace(value.name,"");
+//    dongname.innerText='aaa'
+
+    value.deals.forEach(deal=>{
+//    const div=document.createElement('div');
+//    div.style.padding="5px 10px";
+//    div.style.margin="0 5px;"
+//    div.innerText=deal.year
+//    dongname.append(div);
+    div=document.createElement('div');
+    div.style.padding="5px 20px";
+    div.style.margin="5px";
+    div.style.fontSize="1rem";
+    div.style.fontWeight="bold";
+
+//    const p_year=document.createElement('p')
+//    p_year.innerText=deal.year
+//    div.append(p_year)
+//     const p_month=document.createElement('p')
+//    p_month.innerText=deal.month
+//    div.append(p_month)
+
+    div=document.createElement('div');
+    div.style.padding="5px 20px";
+    div.style.margin="5px";
+    div.style.fontSize="1rem";
+    div.style.fontWeight="bold";
+    div.innerText=deal.year;
     dongname.append(div);
+    div.style.background="yellow";
     tr.append(dongname);
-    div.addEventListener('click',()=>{
-        if(div.classList.contains('selected')){
-            div.classList.remove(('selected'))
-            selectedApart.splice(selectedDong.indexOf(apt),1)
-        }else{
-            div.classList.add('selected')
-            selectAPT(apt)
-            }
-            console.log('aparts',selectedApart)
-            })
+//    div.addEventListener('click',()=>{
+//        if(div.classList.contains('selected')){
+//            div.classList.remove(('selected'))
+//            selectedApart.splice(selectedDong.indexOf(apt),1)
+//        }else{
+//            div.classList.add('selected')
+//            selectAPT(apt)
+//            }
+//
+//            })
     })
 
-    apartTbody.append(tr);
-    apartTable.append(apartTbody)
-    selectApart.append(apartTable)
+    dealTbody.append(tr);
+    dealTable.append(dealTbody)
+    selectDeal.append(dealTable)
 
 
 
 
-    selectDong.classList.remove('display')
-    selectApart.classList.add('display')
+//    selectDong.classList.remove('display')
+//    selectApart.classList.add('display')
     })
 }

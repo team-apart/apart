@@ -315,6 +315,14 @@ main .selectForm .selectApart{
     transition:1s;
 
 }
+main .selectForm .selectDeal{
+    width:50%;
+    position:absolute;
+    left:20%;
+    transition:1s;
+    border:1px solid black;
+
+}
 main .selectForm .selectDong.display{
     left:20%;
     transition:1s;
@@ -322,7 +330,12 @@ main .selectForm .selectDong.display{
 }
 
 main .selectForm .selectApart.display{
-   left:20%;
+    left:20%;
+    transition:1s;
+}
+
+main .selectForm .selectDeal.display{
+    left:20%;
     transition:1s;
 }
 
