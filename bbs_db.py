@@ -10,9 +10,9 @@ def get_dongs():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3338,
+            port=3307,
             user='root',
-            password='1212',
+            password='1234',
             db='apart',
             cursorclass=DictCursor
         )
@@ -41,9 +41,9 @@ def get_apart():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3338,
+            port=3307,
             user='root',
-            password='1212',
+            password='1234',
             db='apart',
             cursorclass=DictCursor
         )
@@ -73,12 +73,12 @@ def create(data):
     try :
         # 2. db연결(url(ip+port), id/pw, db명)
         con = mysql.connect(
-                            host='localhost',
-                            port= 3338,
-                            user='root',
-                            password='1212',
-                            db='demo_db',
-                            cursorclass=DictCursor
+            host='localhost',
+            port=3307,
+            user='root',
+            password='1234',
+            db='apart',
+            cursorclass=DictCursor
                             )
         cursor = con.cursor()
 
@@ -106,10 +106,10 @@ def read_one(data):
         # 2. db연결(url(ip+port), id/pw, db명)
         con = mysql.connect(
             host='localhost',
-            port=3338,
+            port=3307,
             user='root',
-            password='1212',
-            db='demo_db',
+            password='1234',
+            db='apart',
             cursorclass=DictCursor
         )
         cursor = con.cursor()
