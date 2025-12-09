@@ -233,7 +233,7 @@ function createApartTable(values){
             div.classList.add('selected')
             selectAPT(apt)
             }
-            console.log('aparts',selectedApart)
+            // console.log('aparts',selectedApart)
             })
     })
 
@@ -286,23 +286,23 @@ function createDealTable(values){
     tr.append(td)
 
 
-    const dongname=document.createElement('td')
-    dongname.style.verticalAlign="top";
-    dongname.style.display="flex";
-    dongname.style.justifyContent="flex-start";
-    dongname.style.alignItems="flex-start"
-    dongname.style.width='800px';
-    dongname.style.flexWrap="wrap"
-//    dongname.innerText='aaa'
+    const dealInfo=document.createElement('td')
+    dealInfo.style.verticalAlign="top";
+    dealInfo.style.display="flex";
+    dealInfo.style.justifyContent="flex-start";
+    dealInfo.style.alignItems="flex-end"
+    dealInfo.style.width='1000px';
+    dealInfo.style.flexWrap="wrap"
+//    dealInfo.innerText='aaa'
 
     value.deals.forEach(deal=>{
 //    const div=document.createElement('div');
 //    div.style.padding="5px 10px";
 //    div.style.margin="0 5px;"
 //    div.innerText=deal.year
-//    dongname.append(div);
+//    dealInfo.append(div);
     div=document.createElement('div');
-    div.style.padding="5px 20px";
+    div.style.padding="3px 3px";
     div.style.margin="5px";
     div.style.fontSize="1rem";
     div.style.fontWeight="bold";
@@ -315,14 +315,15 @@ function createDealTable(values){
 //    div.append(p_month)
 
     div=document.createElement('div');
-    div.style.padding="5px 20px";
+    div.style.padding="5px 15px";
     div.style.margin="5px";
     div.style.fontSize="1rem";
     div.style.fontWeight="bold";
     div.innerText=deal.year;
-    dongname.append(div);
+    dealInfo.append(div);
     div.style.background="yellow";
-    tr.append(dongname);
+    div.style.height=(deal.avg/1000).toString()+"px"
+    tr.append(dealInfo);
 //    div.addEventListener('click',()=>{
 //        if(div.classList.contains('selected')){
 //            div.classList.remove(('selected'))
