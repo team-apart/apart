@@ -5,11 +5,9 @@ from starlette.requests import Request
 from starlette.responses import HTMLResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from collections import defaultdict
+from typing import List, Dict, Any
 
-
-from websockets.sync.client import connect_socks_proxy
-
-import bbs_db as db
+from deal import deal_db as db
 import chart_db as ch
 
 # FastAPI 앱 인스턴스 생성
@@ -37,11 +35,10 @@ def read_root():
 @app.get('/getDongs')
 def get_dongs():
     data=db.get_dongs();
-    print(data)
     result_dict=defaultdict(list)
     for item in data:
         result_dict[item["guName"]].append(item["dongName"])
-    result=[{"name":guName.replace("\r",""),"dong":dongName} for guName,dongName in result_dict.items()]
+    result=[{"name":guName,"dong":dongName} for guName,dongName in result_dict.items()]
     return result
 
 @app.get('/getApart')
@@ -52,12 +49,59 @@ def get_Apart():
         result_dict[item["dongName"]].append(item["aptName"])
     result=[{"name":dongName,"apart":aptName} for dongName,aptName in result_dict.items()]
     return result
+def group_deals(raw: List[Any]) -> List[Dict[str, Any]]:
+    """
+    raw: 입력이 [{...}, ...] 또는 [[{...}, ...], [{...}, ...], ...] 같은 1~2차원 리스트일 수 있음.
+    반환: [{'dong':..., 'apart':..., 'area':..., 'deals':[{'year':..., 'month':..., 'avg': Decimal(...)}, ...]}, ...]
+    """
+    # 1) 입력 평탄화: raw 내부에 리스트가 있으면 모두 꺼내서 rows에 담음
+    rows = []
+    for item in raw:
+        if isinstance(item, list):
+            rows.extend(item)
+        else:
+            rows.append(item)
 
-@app.get('/getDeals')
-def get_Deal():
-    data=db.get_deal()
-    print(data)
-    result_dict=defaultdict(list)
+    # 2) 그룹화: (dongName, aptName, area)를 키로 묶음
+    grouped = {}
+    for r in rows:
+        dong = r.get("dongName")
+        apt = r.get("aptName")
+        area = r.get("area")
+
+        key = (dong, apt, area)
+
+        if key not in grouped:
+            grouped[key] = {
+                "dong": dong,
+                "apart": apt,
+                "area": area,
+                "deals": []
+            }
+
+        grouped[key]["deals"].append({
+            "year": r.get("year"),
+            "month": r.get("month"),
+            "avg": r.get("average")  # Decimal 타입 그대로 보관
+        })
+
+    # 3) dict -> list 반환
+    return list(grouped.values())
+
+
+
+@app.post('/getDeals')
+async def get_Deal(payload: List[str]):
+    # print(payload)
+    # data=request.selectedApartr
+    # print('dealData',list(data))
+    data=db.get_deal(payload)
+
+    result=group_deals(data)
+    print('result=',result)
+    return result
+    # print(data)
+    # result_dict=defaultdict(list)
     # for item in data:
     #     result_dict[item["dongName"]].append(item["aptName"])
     # result=[{"name":dongName,"apart":aptName} for dongName,aptName in result_dict.items()]

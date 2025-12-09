@@ -5,14 +5,15 @@
 import pymysql as mysql
 from pymysql import IntegrityError
 from pymysql.cursors import DictCursor
+from typing import List
 
 def get_dongs():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3338,
+            port=3307,
             user='root',
-            password='1212',
+            password='1234',
             db='apart',
             cursorclass=DictCursor
         )
@@ -41,9 +42,9 @@ def get_apart():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3338,
+            port=3307,
             user='root',
-            password='1212',
+            password='1234',
             db='apart',
             cursorclass=DictCursor
         )
@@ -68,15 +69,25 @@ def get_apart():
         print("무결성 에러 발생함.")
         print(ie)  # 에러 정보 출력
     return rows
+def transform(arr):
+    result = []
+    for s in arr:
+        parts = s.split(" ", 1)   # 앞 단어와 나머지를 분리 (최대 1번만 split)
+        result.append([parts[0], s])  # [앞 단어, 전체 문자열] 형태로 추가
+    return result
 
 
-def get_deal():
+
+def get_deal(aparts:List[str]):
+    arrs=transform(aparts)
+    print(arrs)
+
     try:
         con = mysql.connect(
             host='localhost',
-            port=3338,
+            port=3307,
             user='root',
-            password='1212',
+            password='1234',
             db='apart',
             cursorclass=DictCursor
         )
@@ -86,42 +97,41 @@ def get_deal():
 
         sql="""
             SELECT
-            gu.guId,
-            dong.dongId,
-            apart.aptName,
+            deal.guName,
+            deal.dongName,
+            deal.aptName,
+            deal.area,
             YEAR(deal.dealDate) AS year,
             MONTH(deal.dealDate) AS month,
-            deal.area,
             AVG(ROUND(deal.dealAmount, 1)) AS average
-            FROM gu
-            JOIN dong ON gu.guId = dong.guId
-            JOIN deal ON dong.dongId = deal.dongId
-            JOIN apart ON dong.dongId = apart.dongId
-
-            WHERE gu.guId = 20
-              AND dong.dongId = 46
-              AND deal.area = 18
-
+            FROM deal
+            WHERE  deal.dongName=%s
+                AND deal.aptName=%s
             GROUP BY
-                gu.guId,
-                dong.dongId,
-                apart.aptName,
+                deal.guName,
+                deal.dongName,
+                deal.aptName,
+                deal.area,
                 YEAR(deal.dealDate),
-                MONTH(deal.dealDate),
-                deal.area
+                MONTH(deal.dealDate)
+                
             ORDER BY
-                apart.aptName,
-                YEAR(deal.dealDate),
-                MONTH(deal.dealDate),
-                deal.area
+                deal.aptName,
+                deal.area,
+                YEAR(deal.dealDate) desc,
+                MONTH(deal.dealDate) desc
+            LIMIT 12
                 """
 
-        result = cursor.execute(sql);
-        print(result); # insert, update, delete의 결과는 정수값!
-        # 실행된 결과의 행수(레코드 개수)
-        if result >= 1 :
-            print("아파트 검색 성공!!! ")
-            rows = cursor.fetchall();
+        resultDealInfo=[]
+        for arr in arrs:
+            result = cursor.execute(sql,arr);
+            print(result); # insert, update, delete의 결과는 정수값!
+            # 실행된 결과의 행수(레코드 개수)
+            if result >= 1 :
+                print("아파트 검색 성공!!! ")
+                rows = cursor.fetchall();
+                resultDealInfo.append(rows)
 
         # 4. 보낸 sql문을 바로 실행해줘(반영해줘.)
         con.commit();
@@ -131,7 +141,8 @@ def get_deal():
     except IntegrityError as ie:
         print("무결성 에러 발생함.")
         print(ie)  # 에러 정보 출력
-    return rows
+    print('resultDealInfo',resultDealInfo)
+    return resultDealInfo
 
 
 # ----------------------------------------------------------

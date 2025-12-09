@@ -8,10 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/fastapi-simple-bbs+chart.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fastapi-simple-bbs+chart.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bbs_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/bbs_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bbs_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/deal/deal_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deal_db.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,11 +71,14 @@
       <recent name="C:\Users\berse\OneDrive\Desktop\fastapi-simple-bbs+chart\static\img" />
       <recent name="C:\Users\berse\OneDrive\Desktop\fastapi-simple-bbs+chart" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pc\Desktop\project_apt\apart\deal" />
+    </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
+        <option value="bundled-python-sdk-164cda30dcd9-0af03a5fa574-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26830.99" />
       </set>
     </attachedChunks>
   </component>
