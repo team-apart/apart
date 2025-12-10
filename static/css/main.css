@@ -4,6 +4,10 @@ body {
   font-weight: 400;
   line-height: 1.4;
   color: #333;
+    background-image:url("/static/img/아파트1.jpg");
+     background-repeat: no-repeat;
+     background-size:contain;
+
 
 }
 a {
@@ -281,8 +285,12 @@ header .main-menu .item .item__contents .contents__texture p {
   margin: 4px 0 14px;
 }
 /*SELECT */
+
+
+
 main{
     margin:0 auto;
+
 }
 main .status{
 position:absolute;
@@ -299,12 +307,18 @@ main .selectForm{
     z-index:2;
 
 
+
+
 }
 main .selectForm .selectDong{
     width:50%;
+    height:100vh;
     position:absolute;
     left:-100%;
     transition:1s;
+    opacity: .7;
+    background:white;
+
 
 
 }
@@ -314,6 +328,7 @@ main .selectForm .selectApart{
     left:120%;
     transition:1s;
 
+
 }
 main .selectForm .selectDeal{
     width:50%;
@@ -322,11 +337,13 @@ main .selectForm .selectDeal{
     left:20%;
     transition:1s;
 
+
 }
 main .selectForm .selectDeal.display{
     left:20%;
     top:0;
     transition:1s;
+
 
 }
 
@@ -336,11 +353,14 @@ main .selectForm .selectDong.display{
     left:20%;
     transition:1s;
 
+
 }
 
 main .selectForm .selectApart.display{
     left:20%;
     transition:1s;
+    opacity: .7;
+    background:white;
 }
 
 
