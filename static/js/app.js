@@ -370,7 +370,7 @@ const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : m
 
     bar=document.createElement('div');
     bar.style.marginLeft="10px";
-    bar.style.background="green";
+    bar.style.background="blue";
     if((maxValue/1000)<100) {
         bar.style.height=(deal.avg/1000+80).toString()+"px"
     }else if((maxValue/1000)>200){
