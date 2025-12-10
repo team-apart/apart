@@ -17,11 +17,15 @@ const dealTable=document.querySelector('.dealTable')
 const dealTbody=dealTable.querySelector('.dealTbody')
 
 const goNext=document.querySelector('.goNext')
+
 const left=goNext.querySelector('.leftArrow')
 const leftBtn=left.querySelector('img')
+leftBtn.style.display="none"
 const right=goNext.querySelector('.rightArrow')
 const rightBtn=right.querySelector('img')
 const status=document.querySelector('.status')
+leftBtn.style.display="none"
+rightBtn.style.display="none"
 //const table=document.querySelector('table')
 //// 검색창 요소를 클릭하면 실행.
 searchEl.addEventListener('click', function () {
@@ -31,26 +35,44 @@ searchEl.addEventListener('click', function () {
 // 검색창 요소 내부 실제 input 요소에 포커스되면 실행.
 searchInputEl.addEventListener('focus', function () {
   searchEl.classList.add('focused')
-  searchInputEl.setAttribute('placeholder', '구, 동, 아파트명 검색')
+  searchInputEl.setAttribute('placeholder', '아파트명을 입력하세요')
 })
 // 검색창 요소 내부 실제 input 요소에서 포커스가 해제(블러)되면 실행.
 searchInputEl.addEventListener('blur', function () {
   searchEl.classList.remove('focused')
   searchInputEl.setAttribute('placeholder', '')
 })
+searchInputEl.addEventListener('change', async function (e) {
+    const result=await axios.post('http://localhost:8000/quick',this.value)
+
+
+    createDealTable(result.data)
+    searchInputEl.value=""
+
+})
+
 
 leftBtn.addEventListener('click',function(){
 if(status.innerHTML>0 && status.innerHTML<=1){
-selectDong.classList.remove('display')
+    leftBtn.style.display="none"
+    rightBtn.style.display="none"
+
+    selectDong.classList.remove('display')
 }
 if(status.innerHTML>1 && status.innerHTML<=2){
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
     selectDeal.classList.remove('display')
+    if(selectedDong.length>=1){
+        rightBtn.style.display="block"
+        }
     }
 if(status.innerHTML>2 && status.innerHTML<=3){
 selectApart.classList.add('display')
 selectDeal.classList.remove('display')
+if(selectedDong.length>=1){
+        rightBtn.style.display="block"
+        }
 }
 
 if(status.innerHTML>0)status.innerHTML-=1
@@ -63,12 +85,16 @@ rightBtn.addEventListener('click',function(){
     if(status.innerHTML<3)status.innerHTML=1+parseInt(status.innerHTML)
     if(status.innerHTML>0 && status.innerHTML<=1){
         selectDong.classList.add('display')
+        rightBtn.style.display="none"
+
     }
     if(status.innerHTML>1 && status.innerHTML<=2){
+     rightBtn.style.display="none"
         selectedApartCommit()
 
     }
     if(status.innerHTML>2 && status.innerHTML<=3){
+     rightBtn.style.display="none"
         selectedDealCommit()
         selectApart.classList.remove('display')
 
@@ -104,22 +130,30 @@ if(!selectedGu.includes(gu)){
 }}
 
 function selectDONG(dong){
+
 if(!selectedDong.includes(dong)){
     selectedDong.push(dong)
     }else{
     selectedDong.splice(selectedDong.indexOf(dong),1)
-}}
+    }
+
+}
 function selectAPT(apt){
-if(!selectedApart.includes(apt)){
-    selectedApart.push(apt)
+    if(!selectedApart.includes(apt)){
+        selectedApart.push(apt)
+
     }else{
-    selectedGu.splice(selectedApart.indexOf(apt),1)
+        selectedGu.splice(selectedApart.indexOf(apt),1)
 }}
 async function selectedDongCommit(){
     status.innerText=1
     const tableValues=[];
     dongTbody.innerHTML="";
-//    console.log('tableValues',tableValues)
+    leftBtn.style.display="block"
+
+
+
+
 try{
     const dongs=await axios.get('http://localhost:8000/getDongs')
     const results=selectedGu.map(gu=>dongs.data.filter(dong=>dong.name===gu))
@@ -167,6 +201,11 @@ function createDongTable(values){
         }else{
             div.classList.add('selected')
             selectDONG(don)
+            }
+            if(selectedDong.length>=1){
+            rightBtn.style.display="block"
+            }else{
+            rightBtn.style.display="none"
             }
             })
     })
@@ -236,7 +275,11 @@ function createApartTable(values){
             div.classList.add('selected')
             selectAPT(apt)
             }
-            // console.log('aparts',selectedApart)
+            if(selectedApart.length>=1){
+            rightBtn.style.display="block"
+            }else{
+            rightBtn.style.display="none"
+            }
             })
     })
 
@@ -288,7 +331,7 @@ function createDealTable(values){
 
 //    td///////////////////////////////////////동 입력
     p=document.createElement('p')
-    p.innerText=value.apart.replace(value.dongName,"")
+    p.innerText=value.apart.replace(value.dong,"")
     td.append(p)
     p=document.createElement('p')
     p.innerText=value.area+"평형"
@@ -316,39 +359,32 @@ function createDealTable(values){
       return a.year - b.year; // year 먼저 비교
     });
 
- const sum = value.deals.reduce((acc, item) => acc + parseInt(item.avg), 0);
-console.log(sum/12); // 12
+const maxValue = value.deals.reduce((max, item) => item.avg > max ? item.avg : max, -Infinity);
+const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : min, -Infinity);
 
-  console.log(sum)
+
+
 
 
     value.deals.forEach(deal=>{
-//    const div=document.createElement('div');
-//    div.style.padding="5px 10px";
-//    div.style.margin="0 5px;"
-//    div.innerText=deal.year
-//    dealInfo.append(div);
-//    div=document.createElement('div');
-////    div.style.padding="3px 3px";
-//    div.style.margin="5px";
-//    div.style.fontSize="1rem";
-//    div.style.fontWeight="bold";
-//    div.style.background="green";
-
-//    const p_year=document.createElement('p')
-//    p_year.innerText=deal.year
-//    div.append(p_year)
-//     const p_month=document.createElement('p')
-//    p_month.innerText=deal.month
-//    div.append(p_month)
 
     bar=document.createElement('div');
-//    div.style.padding="5px 15px";
     bar.style.marginLeft="10px";
-
     bar.style.background="green";
-     bar.style.height=(deal.avg/1000).toString()+"px"
-
+    if((maxValue/1000)<100) {
+        bar.style.height=(deal.avg/1000+80).toString()+"px"
+    }else if((maxValue/1000)>200){
+        bar.style.height=(deal.avg/1000-100).toString()+"px"
+    }else if((maxValue/1000)>170){
+        bar.style.height=(deal.avg/1000-70).toString()+"px"
+    }else if((minValue/1000)<80){
+        bar.style.height=(deal.avg/1000+60).toString()+"px"
+    }else if((minValue/1000)<110){
+        bar.style.height=(deal.avg/1000+30).toString()+"px"
+    }else
+    {
+        bar.style.height=(deal.avg/1000).toString()+"px"
+    }
 
 
     bar.style.width="50px"
@@ -358,14 +394,18 @@ console.log(sum/12); // 12
     bar.style.justifyContent="space-between"
     bar.style.color="white"
     value=document.createElement('div')
-    value.innerText=parseFloat(deal.avg/1000).toFixed(1)
+
+    value.style.fontSize="1.2rem"
+    value.style.color="red"
+    value.style.fontWeight="bold"
+    value.innerText=parseFloat(deal.avg/10000).toFixed(1)
     period=document.createElement('div')
 
     year=document.createElement('div')
     year.innerText=deal.year
     period.append(year)
     month=document.createElement('div')
-    month.innerText=deal.month
+    month.innerText=deal.month+"월"
     month.style.alignText="center"
     period.append(month)
     bar.append(value)
@@ -373,16 +413,7 @@ console.log(sum/12); // 12
     dealInfo.append(bar);
 
     tr.append(dealInfo);
-//    div.addEventListener('click',()=>{
-//        if(div.classList.contains('selected')){
-//            div.classList.remove(('selected'))
-//            selectedApart.splice(selectedDong.indexOf(apt),1)
-//        }else{
-//            div.classList.add('selected')
-//            selectAPT(apt)
-//            }
-//
-//            })
+
     })
 
     dealTbody.append(tr);

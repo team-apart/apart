@@ -318,13 +318,20 @@ main .selectForm .selectApart{
 main .selectForm .selectDeal{
     width:50%;
     position:absolute;
-    bottom:100%;
+    top:850px;
     left:20%;
     transition:1s;
 
-
+}
+main .selectForm .selectDeal.display{
+    left:20%;
+    top:0;
+    transition:1s;
 
 }
+
+
+
 main .selectForm .selectDong.display{
     left:20%;
     transition:1s;
@@ -336,11 +343,7 @@ main .selectForm .selectApart.display{
     transition:1s;
 }
 
-main .selectForm .selectDeal.display{
-    left:20%;
-    top:10px;
-    transition:1s;
-}
+
 
 main table td div.dong{
     cursor:pointer;
