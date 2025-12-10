@@ -145,6 +145,103 @@ def get_deal(aparts:List[str]):
     return resultDealInfo
 
 
+def get_deal_apart(apart: str):
+
+    print(apart)
+
+    try:
+        con = mysql.connect(
+            host='localhost',
+            port=3307,
+            user='root',
+            password='1234',
+            db='apart',
+            cursorclass=DictCursor
+        )
+        cursor = con.cursor()
+        # 3. sql문 작성한 후 sql문을 db서버에 보내자.
+        #    sql = "select dong.dongName,apart.aptName from dong inner join apart on dong.dongId=apart.dongId"
+
+        # sql = """
+        #     SELECT
+        #     deal.guName,
+        #     deal.dongName,
+        #     deal.aptName,
+        #     deal.area,
+        #     YEAR(deal.dealDate) AS year,
+        #     MONTH(deal.dealDate) AS month,
+        #     AVG(ROUND(deal.dealAmount, 1)) AS average
+        #
+        #     WHERE  deal.aptName like %s
+        #     GROUP BY
+        #         deal.guName,
+        #         deal.dongName,
+        #         deal.aptName,
+        #         deal.area,
+        #         YEAR(deal.dealDate),
+        #         MONTH(deal.dealDate)
+        #
+        #     ORDER BY
+        #         deal.aptName,
+        #         deal.area,
+        #         YEAR(deal.dealDate) desc,
+        #         MONTH(deal.dealDate) desc
+        #
+        #         """
+        sql="""
+            SELECT guName,
+                dongName,
+                aptName,
+                area,
+                year,
+                month,
+                average
+            FROM (
+                SELECT 
+                deal.guName,
+                deal.dongName,
+                deal.aptName,
+                deal.area,
+                YEAR(deal.dealDate) AS year,
+                MONTH(deal.dealDate) AS month,
+                AVG(ROUND(deal.dealAmount, 1)) AS average,
+                ROW_NUMBER() OVER (
+                PARTITION BY deal.aptName, deal.area
+                ORDER BY YEAR(deal.dealDate) DESC, MONTH(deal.dealDate) DESC
+                ) AS rn
+            FROM deal
+            WHERE deal.aptName LIKE %s
+            GROUP BY deal.guName,
+             deal.dongName,
+             deal.aptName,
+             deal.area,
+             YEAR(deal.dealDate),
+             MONTH(deal.dealDate)
+            ) t
+            WHERE rn <= 12
+            ORDER BY aptName, area, year DESC, month DESC;
+
+        """
+
+        result = cursor.execute(sql, ("%"+apart));
+        # print(result) # insert, update, delete의 결과는 정수값!
+        # 실행된 결과의 행수(레코드 개수)
+        if result >= 1:
+            print("아파트 검색 성공!!! ")
+            rows = cursor.fetchall();
+
+
+        # 4. 보낸 sql문을 바로 실행해줘(반영해줘.)
+        con.commit();
+
+        # 5. 커넥션 close
+        con.close();
+    except IntegrityError as ie:
+        print("무결성 에러 발생함.")
+        print(ie)  # 에러 정보 출력
+    # print('resultDealInfo', rows)
+    return rows
+
 # ----------------------------------------------------------
 def create(data):
     try :

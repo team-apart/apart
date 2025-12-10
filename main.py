@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form,Body
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
@@ -92,23 +92,20 @@ def group_deals(raw: List[Any]) -> List[Dict[str, Any]]:
 
 @app.post('/getDeals')
 async def get_Deal(payload: List[str]):
-    # print(payload)
-    # data=request.selectedApartr
-    # print('dealData',list(data))
     data=db.get_deal(payload)
+    result=group_deals(data)
+    print('result=',result)
+    return result
+
+@app.post('/quick')
+async def get_Deal_apart(payload: str=Body(...)):
+    print( payload)
+    data=db.get_deal_apart(payload)
 
     result=group_deals(data)
     print('result=',result)
     return result
-    # print(data)
-    # result_dict=defaultdict(list)
-    # for item in data:
-    #     result_dict[item["dongName"]].append(item["aptName"])
-    # result=[{"name":dongName,"apart":aptName} for dongName,aptName in result_dict.items()]
-
-    # return result
-
-
+# ---------------------------------------------------------------
 # 경로 파라미터 예시
 @app.get("/items/{item_id}")
 def read_item(item_id: int):
