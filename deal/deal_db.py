@@ -11,9 +11,9 @@ def get_dongs():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3336,
+            port=3307,
             user='root',
-            password='1212',
+            password='1234',
             db='apart',
             cursorclass=DictCursor
         )
@@ -42,9 +42,9 @@ def get_apart():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3336,
+            port=3307,
             user='root',
-            password='1212',
+            password='1234',
             db='apart',
             cursorclass=DictCursor
         )
@@ -85,9 +85,9 @@ def get_deal(aparts:List[str]):
     try:
         con = mysql.connect(
             host='localhost',
-            port=3336,
+            port=3307,
             user='root',
-            password='1212',
+            password='1234',
             db='apart',
             cursorclass=DictCursor
         )
