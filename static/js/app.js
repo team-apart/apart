@@ -46,14 +46,17 @@ selectDong.classList.remove('display')
 if(status.innerHTML>1 && status.innerHTML<=2){
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
+    selectDeal.classList.remove('display')
     }
 if(status.innerHTML>2 && status.innerHTML<=3){
 selectApart.classList.add('display')
+selectDeal.classList.remove('display')
 }
-    if(status.innerHTML>0)status.innerHTML-=1
-    if(status.innerHTML<1) {
-        selectApart.classList.remove('display')
-    }
+
+if(status.innerHTML>0)status.innerHTML-=1
+if(status.innerHTML<1) {
+    selectApart.classList.remove('display')
+}
 
 })
 rightBtn.addEventListener('click',function(){
@@ -272,28 +275,52 @@ function createDealTable(values){
     console.log('values',values)
     const tag=values.map(value=>{
     const tr=document.createElement('tr')
+    tr.style.display="flex";
+    tr.style.alignItems="flex-end";
+
     const td=document.createElement('td')
     const image=document.createElement('img')
     td.style.fontSize="20px"
     td.style.border="2px solid black"
     td.style.height="200px";
     td.style.width="200px";
-    td.style.textAlign="center"
-    td.innerText=value.apart.replace(value.dongName,"")+value.area+"평형"///////////////////////////////////////동 입력
+    td.style.textAlign="center";
+
+//    td///////////////////////////////////////동 입력
+    p=document.createElement('p')
+    p.innerText=value.apart.replace(value.dongName,"")
+    td.append(p)
+    p=document.createElement('p')
+    p.innerText=value.area+"평형"
+    td.append(p)
 //    image.src="/static/img/mascot/"+value.name+".png";
     image.style.width="200px";
     td.append(image)
     tr.append(td)
 
 
-    const dealInfo=document.createElement('td')
+    const dealInfo=document.createElement('td')//////그래프 div
     dealInfo.style.verticalAlign="top";
     dealInfo.style.display="flex";
     dealInfo.style.justifyContent="flex-start";
     dealInfo.style.alignItems="flex-end"
     dealInfo.style.width='1000px';
     dealInfo.style.flexWrap="wrap"
+//    dealInfo.style.background="green"
+//    dealInfo.style.lineHeight="1.2";
 //    dealInfo.innerText='aaa'
+    value.deals.sort((a, b) => {
+      if (a.year === b.year) {
+        return a.month - b.month; // 같은 year일 때 month 비교
+      }
+      return a.year - b.year; // year 먼저 비교
+    });
+
+ const sum = value.deals.reduce((acc, item) => acc + parseInt(item.avg), 0);
+console.log(sum/12); // 12
+
+  console.log(sum)
+
 
     value.deals.forEach(deal=>{
 //    const div=document.createElement('div');
@@ -301,11 +328,12 @@ function createDealTable(values){
 //    div.style.margin="0 5px;"
 //    div.innerText=deal.year
 //    dealInfo.append(div);
-    div=document.createElement('div');
-    div.style.padding="3px 3px";
-    div.style.margin="5px";
-    div.style.fontSize="1rem";
-    div.style.fontWeight="bold";
+//    div=document.createElement('div');
+////    div.style.padding="3px 3px";
+//    div.style.margin="5px";
+//    div.style.fontSize="1rem";
+//    div.style.fontWeight="bold";
+//    div.style.background="green";
 
 //    const p_year=document.createElement('p')
 //    p_year.innerText=deal.year
@@ -314,15 +342,36 @@ function createDealTable(values){
 //    p_month.innerText=deal.month
 //    div.append(p_month)
 
-    div=document.createElement('div');
-    div.style.padding="5px 15px";
-    div.style.margin="5px";
-    div.style.fontSize="1rem";
-    div.style.fontWeight="bold";
-    div.innerText=deal.year;
-    dealInfo.append(div);
-    div.style.background="yellow";
-    div.style.height=(deal.avg/1000).toString()+"px"
+    bar=document.createElement('div');
+//    div.style.padding="5px 15px";
+    bar.style.marginLeft="10px";
+
+    bar.style.background="green";
+     bar.style.height=(deal.avg/1000).toString()+"px"
+
+
+
+    bar.style.width="50px"
+    bar.style.display="flex"
+    bar.style.flexDirection="column"
+    bar.style.alignItems="center"
+    bar.style.justifyContent="space-between"
+    bar.style.color="white"
+    value=document.createElement('div')
+    value.innerText=parseFloat(deal.avg/1000).toFixed(1)
+    period=document.createElement('div')
+
+    year=document.createElement('div')
+    year.innerText=deal.year
+    period.append(year)
+    month=document.createElement('div')
+    month.innerText=deal.month
+    month.style.alignText="center"
+    period.append(month)
+    bar.append(value)
+    bar.append(period)
+    dealInfo.append(bar);
+
     tr.append(dealInfo);
 //    div.addEventListener('click',()=>{
 //        if(div.classList.contains('selected')){
@@ -343,7 +392,7 @@ function createDealTable(values){
 
 
 
-//    selectDong.classList.remove('display')
-//    selectApart.classList.add('display')
+//    selectApart.classList.remove('display')
+    selectDeal.classList.add('display')
     })
 }
