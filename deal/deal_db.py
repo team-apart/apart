@@ -11,15 +11,15 @@ def get_dongs():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3336,
+            port=3307,
             user='root',
-            password='1212',
-            db='apart',
+            password='1234',
+            db='apart2',
             cursorclass=DictCursor
         )
         cursor = con.cursor()
      # 3. sql문 작성한 후 sql문을 db서버에 보내자.
-        sql = "select gu.guName,dong.dongName from gu inner join dong on gu.guId=dong.guId"
+        sql = "select SIGUDONG.GU_NM,SIGUDONG.DONG_NM from SIGUDONG "
         result = cursor.execute(sql);
         print(result); # insert, update, delete의 결과는 정수값!
         # 실행된 결과의 행수(레코드 개수)
@@ -42,15 +42,15 @@ def get_apart():
     try:
         con = mysql.connect(
             host='localhost',
-            port=3336,
+            port=3307,
             user='root',
-            password='1212',
-            db='apart',
+            password='1234',
+            db='apart2',
             cursorclass=DictCursor
         )
         cursor = con.cursor()
      # 3. sql문 작성한 후 sql문을 db서버에 보내자.
-        sql = "select dong.dongName,apart.aptName from dong inner join apart on dong.dongId=apart.dongId"
+        sql = "select SIGUDONG.DONG_NM,APART.APART_NM from SIGUDONG inner join APART on SIGUDONG.DONG_CD=APART.DONG_CD"
 
 
         result = cursor.execute(sql);
@@ -68,7 +68,9 @@ def get_apart():
     except IntegrityError as ie:
         print("무결성 에러 발생함.")
         print(ie)  # 에러 정보 출력
+    # print('rows',rows)
     return rows
+
 def transform(arr):
     result = []
     for s in arr:
@@ -80,15 +82,15 @@ def transform(arr):
 
 def get_deal(aparts:List[str]):
     arrs=transform(aparts)
-    print(arrs)
+    print('arrs',arrs)
 
     try:
         con = mysql.connect(
             host='localhost',
-            port=3336,
+            port=3307,
             user='root',
-            password='1212',
-            db='apart',
+            password='1234',
+            db='apart2',
             cursorclass=DictCursor
         )
         cursor = con.cursor()
@@ -97,32 +99,34 @@ def get_deal(aparts:List[str]):
 
         sql="""
             SELECT
-            deal.guName,
-            deal.dongName,
-            deal.aptName,
-            deal.area,
-            YEAR(deal.dealDate) AS year,
-            MONTH(deal.dealDate) AS month,
-            AVG(ROUND(deal.dealAmount, 1)) AS average
-            FROM deal
-            WHERE  deal.dongName=%s
-                AND deal.aptName=%s
+            SIGUDONG.GU_NM,
+            SIGUDONG.DONG_NM,
+            APART.APART_NM,
+            DEAL.SIZE,
+            YEAR(DEAL.CONTRACT_YMD) AS year,
+            MONTH(DEAL.CONTRACT_YMD) AS month,
+            AVG(ROUND(DEAL.PRICE, 1)) AS average
+            FROM DEAL 
+            JOIN SIGUDONG ON DEAL.GU_CD=SIGUDONG.GU_CD AND DEAL.DONG_CD=SIGUDONG.DONG_CD
+            JOIN APART ON SIGUDONG.GU_CD=APART.GU_CD AND SIGUDONG.DONG_CD=APART.DONG_CD
+            WHERE  SIGUDONG.DONG_NM=%s
+                AND APART.APART_NM=%s
             GROUP BY
-                deal.guName,
-                deal.dongName,
-                deal.aptName,
-                deal.area,
-                YEAR(deal.dealDate),
-                MONTH(deal.dealDate)
+                DEAL.GU_CD,
+                DEAL.DONG_CD,
+                DEAL.APART_CD,
+                DEAL.SIZE,
+                YEAR(DEAL.CONTRACT_YMD),
+                MONTH(DEAL.CONTRACT_YMD)
                 
             ORDER BY
-                deal.aptName,
-                deal.area,
-                YEAR(deal.dealDate) desc,
-                MONTH(deal.dealDate) desc
+                DEAL.APART_CD,
+                DEAL.SIZE,
+                YEAR(DEAL.CONTRACT_YMD) desc,
+                MONTH(DEAL.CONTRACT_YMD) desc
             LIMIT 12
                 """
-
+        # print(sql)
         resultDealInfo=[]
         for arr in arrs:
             result = cursor.execute(sql,arr);
@@ -141,7 +145,7 @@ def get_deal(aparts:List[str]):
     except IntegrityError as ie:
         print("무결성 에러 발생함.")
         print(ie)  # 에러 정보 출력
-    print('resultDealInfo',resultDealInfo)
+    # print('resultDealInfo',resultDealInfo)
     return resultDealInfo
 
 
@@ -152,74 +156,48 @@ def get_deal_apart(apart: str):
     try:
         con = mysql.connect(
             host='localhost',
-            port=3336,
+            port=3307,
             user='root',
-            password='1212',
-            db='apart',
+            password='1234',
+            db='apart2',
             cursorclass=DictCursor
         )
         cursor = con.cursor()
         # 3. sql문 작성한 후 sql문을 db서버에 보내자.
-        #    sql = "select dong.dongName,apart.aptName from dong inner join apart on dong.dongId=apart.dongId"
 
-        # sql = """
-        #     SELECT
-        #     deal.guName,
-        #     deal.dongName,
-        #     deal.aptName,
-        #     deal.area,
-        #     YEAR(deal.dealDate) AS year,
-        #     MONTH(deal.dealDate) AS month,
-        #     AVG(ROUND(deal.dealAmount, 1)) AS average
-        #
-        #     WHERE  deal.aptName like %s
-        #     GROUP BY
-        #         deal.guName,
-        #         deal.dongName,
-        #         deal.aptName,
-        #         deal.area,
-        #         YEAR(deal.dealDate),
-        #         MONTH(deal.dealDate)
-        #
-        #     ORDER BY
-        #         deal.aptName,
-        #         deal.area,
-        #         YEAR(deal.dealDate) desc,
-        #         MONTH(deal.dealDate) desc
-        #
-        #         """
         sql="""
-            SELECT guName,
-                dongName,
-                aptName,
-                area,
-                year,
-                month,
-                average
+            SELECT 
+                DEAL.GU_CD,
+                DEAL.DONG_CD,
+                DEAL.APART_CD,
+                DEAL.SIZE,
+                DEAL.CONTRACT_YM,
+                DEAL.CONTRACT_YMD,
+                DEAL.average
             FROM (
                 SELECT 
-                deal.guName,
-                deal.dongName,
-                deal.aptName,
-                deal.area,
-                YEAR(deal.dealDate) AS year,
-                MONTH(deal.dealDate) AS month,
-                AVG(ROUND(deal.dealAmount, 1)) AS average,
+                DEAL.GU_CD,
+                DEAL.DONG_CD,
+                APART.APART_NM,
+                DEAL.SIZE,
+                YEAR(DEAL.CONTRACT_YMD) AS year,
+                MONTH(DEAL.CONTRACT_YMD) AS month,
+                AVG(ROUND(DEAL.PRICE, 1)) AS average,
                 ROW_NUMBER() OVER (
-                PARTITION BY deal.aptName, deal.area
-                ORDER BY YEAR(deal.dealDate) DESC, MONTH(deal.dealDate) DESC
+                PARTITION BY DEAL.APART_CD, DEAL.SIZE
+                ORDER BY YEAR(DEAL.CONTRACT_YMD) DESC, MONTH(DEAL.CONTRACT_YMD) DESC
                 ) AS rn
-            FROM deal
-            WHERE deal.aptName LIKE %s
-            GROUP BY deal.guName,
-             deal.dongName,
-             deal.aptName,
-             deal.area,
-             YEAR(deal.dealDate),
-             MONTH(deal.dealDate)
+            FROM DEAL JOIN APART ON DEAL.APART_CD=APART.APART_CD
+            WHERE APART.APART_NM LIKE %s
+            GROUP BY DEAL.GU_CD,
+             DEAL.DONG_CD,
+             DEAL.APART_CD,
+             DEAL.SIZE,
+             YEAR(DEAL.CONTRACT_YMD),
+             MONTH(DEAL.CONTRACT_YMD)
             ) t
             WHERE rn <= 12
-            ORDER BY aptName, area, year DESC, month DESC;
+            ORDER BY APART_CD, SIZE, YEAR DESC, MONTH DESC;
 
         """
 
@@ -243,12 +221,22 @@ def get_deal_apart(apart: str):
     return rows
 
 # ----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 def create(data):
     try :
         # 2. db연결(url(ip+port), id/pw, db명)
         con = mysql.connect(
                             host='localhost',
-                            port= 3338,
+                            port= 3307,
                             user='root',
                             password='1212',
                             db='demo_db',

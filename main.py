@@ -37,7 +37,7 @@ def get_dongs():
     data=db.get_dongs();
     result_dict=defaultdict(list)
     for item in data:
-        result_dict[item["guName"]].append(item["dongName"])
+        result_dict[item["GU_NM"]].append(item["DONG_NM"])
     result=[{"name":guName,"dong":dongName} for guName,dongName in result_dict.items()]
     return result
 
@@ -46,10 +46,13 @@ def get_Apart():
     data=db.get_apart();
     result_dict=defaultdict(list)
     for item in data:
-        result_dict[item["dongName"]].append(item["aptName"])
-    result=[{"name":dongName,"apart":aptName} for dongName,aptName in result_dict.items()]
+        result_dict[item["DONG_NM"]].append(item["APART_NM"])
+    result=[{"name":DONG_NM,"apart":APART_NM} for DONG_NM,APART_NM in result_dict.items()]
+    # print('result',result)
     return result
+
 def group_deals(raw: List[Any]) -> List[Dict[str, Any]]:
+    print('raw',raw)
     """
     raw: 입력이 [{...}, ...] 또는 [[{...}, ...], [{...}, ...], ...] 같은 1~2차원 리스트일 수 있음.
     반환: [{'dong':..., 'apart':..., 'area':..., 'deals':[{'year':..., 'month':..., 'avg': Decimal(...)}, ...]}, ...]
@@ -65,9 +68,9 @@ def group_deals(raw: List[Any]) -> List[Dict[str, Any]]:
     # 2) 그룹화: (dongName, aptName, area)를 키로 묶음
     grouped = {}
     for r in rows:
-        dong = r.get("dongName")
-        apt = r.get("aptName")
-        area = r.get("area")
+        dong = r.get("DONG_NM")
+        apt = r.get("APART_NM")
+        area = r.get("SIZE")
 
         key = (dong, apt, area)
 
@@ -92,7 +95,9 @@ def group_deals(raw: List[Any]) -> List[Dict[str, Any]]:
 
 @app.post('/getDeals')
 async def get_Deal(payload: List[str]):
+    print('payload',payload)
     data=db.get_deal(payload)
+    print('data',data)
     result=group_deals(data)
     print('result=',result)
     return result
@@ -106,6 +111,20 @@ async def get_Deal_apart(payload: str=Body(...)):
     print('result=',result)
     return result
 # ---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 경로 파라미터 예시
 @app.get("/items/{item_id}")
 def read_item(item_id: int):

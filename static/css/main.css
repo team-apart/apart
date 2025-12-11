@@ -326,7 +326,7 @@ main .selectForm{
 
 }
 main .selectForm .selectDong{
-    width:50%;
+    width:70%;
     height:100vh;
     position:absolute;
     left:-100%;
@@ -336,46 +336,53 @@ main .selectForm .selectDong{
 
 
 
+
 }
 main .selectForm .selectApart{
-    width:50%;
+    width:70%;
     position:absolute;
     left:120%;
     transition:1s;
+    opacity: .7;
+    background:white;
+
 
 
 }
 main .selectForm .selectDeal{
-    width:50%;
     position:absolute;
-    top:850px;
+    width:45%;
+    transition:translateX(-50%);
+    position:absolute;
+    top:1000px;
     left:20%;
     transition:1s;
+    opacity: .7;
+    background:white;
+
 
 
 }
 main .selectForm .selectDeal.display{
-    left:20%;
-    top:0;
+    position:absolute;
+
+    transition:translateX(-50%);
+    top:-10px;
     transition:1s;
-
-
+    margin:auto 0;
 }
-
-
 
 main .selectForm .selectDong.display{
     left:20%;
     transition:1s;
-
+    transition:translateX(-50%)
 
 }
 
 main .selectForm .selectApart.display{
     left:20%;
     transition:1s;
-    opacity: .7;
-    background:white;
+
 }
 
 
