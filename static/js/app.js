@@ -57,29 +57,27 @@ if(status.innerHTML>0 && status.innerHTML<=1){
     leftBtn.style.display="none"
     rightBtn.style.display="none"
     selectDong.classList.remove('display')
-//        dongTbody.innerHTML =""
-        apartTbody.innerHTML =""
-        dealTbody.innerHTML =""
+    selectApart.classList.remove('display')
+    selectDeal.classList.remove('display')
+//    selectedGu=[]
+
+
 }
 if(status.innerHTML>1 && status.innerHTML<=2){
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
     selectDeal.classList.remove('display')
-
-    dongTbody.innerHTML =""
-//    apartTbody.innerHTML =""
-    dealTbody.innerHTML =""
+//    selectedDong=[]
 
     if(selectedDong.length>=1){
         rightBtn.style.display="block"
         }
     }
 if(status.innerHTML>2 && status.innerHTML<=3){
-selectApart.classList.add('display')
-selectDeal.classList.remove('display')
-        dongTbody.innerHTML =""
-//        apartTbody.innerHTML =""
-        dealTbody.innerHTML =""
+    selectDong.classList.remove('display')
+    selectApart.classList.add('display')
+    selectDeal.classList.remove('display')
+//    selectedApart=[]
 if(selectedDong.length>=1){
         rightBtn.style.display="block"
         }
@@ -87,26 +85,24 @@ if(selectedDong.length>=1){
 
 if(status.innerHTML>0)status.innerHTML-=1
 if(status.innerHTML<1) {
-    selectApart.classList.remove('display')
+//    selectApart.classList.remove('display')
 }
-
 })
+
 rightBtn.addEventListener('click',function(){
     if(status.innerHTML<3)status.innerHTML=1+parseInt(status.innerHTML)
     if(status.innerHTML>0 && status.innerHTML<=1){
         selectDong.classList.add('display')
-        dongTbody.innerHTML =""
-        apartTbody.innerHTML =""
-        dealTbody.innerHTML =""
-
+        selectApart.classList.remove('display')
+        selectDeal.classList.remove('display')
         rightBtn.style.display="none"
 
     }
     if(status.innerHTML>1 && status.innerHTML<=2){
      rightBtn.style.display="none"
-        dongTbody.innerHTML =""
-        apartTbody.innerHTML =""
-        dealTbody.innerHTML =""
+        selectDong.classList.remove('display')
+        selectApart.classList.add('display')
+        selectDeal.classList.remove('display')
         selectedApartCommit()
 
     }
@@ -114,9 +110,8 @@ rightBtn.addEventListener('click',function(){
      rightBtn.style.display="none"
 
         selectApart.classList.remove('display')
-        dongTbody.innerHTML =""
-        apartTbody.innerHTML =""
-        dealTbody.innerHTML =""
+        selectDong.classList.remove('display')
+        selectDeal.classList.add('display')
         selectedDealCommit()
 
     }
@@ -171,10 +166,10 @@ console.log('apt',apt)
 async function selectedDongCommit(){
     status.innerText=1
     const tableValues=[];
-    dongTbody.innerHTML="";
     leftBtn.style.display="block"
-
-
+    selectDong.classList.add('display')
+    selectApart.classList.remove('display')
+    selectDeal.classList.remove('display')
 
 
 try{
@@ -237,8 +232,7 @@ function createDongTable(values){
     dongTbody.append(tr);
     dongTable.append(dongTbody)
     selectDong.append(dongTable)
-    selectDong.classList.add('display')
-    selectApart.classList.remove('display')
+
     })
 }
 
@@ -315,8 +309,8 @@ function createApartTable(values){
 
 
 
-    selectDong.classList.remove('display')
-    selectApart.classList.add('display')
+//    selectDong.classList.remove('display')
+//    selectApart.classList.add('display')
     })
 }
 
@@ -341,6 +335,8 @@ try{
 //------------------------------------------------------------------------------
 function createDealTable(values){
 //    console.log('values',values)
+    values.sort((a,b)=>
+    a.area-b.area)
     const tag=values.map(value=>{
     const tr=document.createElement('tr')
     tr.style.display="flex";
@@ -352,15 +348,24 @@ function createDealTable(values){
     td.style.border="2px solid black"
     td.style.height="200px";
     td.style.width="200px";
-    td.style.textAlign="center";
+    td.style.display='flex'
+    td.style.justifyContent="flex-end";
+    td.style.alignItems="center";
+    td.style.flexDirection="column"
 
 //    td///////////////////////////////////////동 입력
+    p=document.createElement('p')
+    p.innerText=value.dong
+    td.append(p)
     p=document.createElement('p')
     p.innerText=value.apart.replace(value.dong,"")
     td.append(p)
     p=document.createElement('p')
-    p.innerText=value.area+"평형"
+    unit=document.createElement('sup')
+    p.innerText=value.area+"m2"
     td.append(p)
+
+
 //    image.src="/static/img/mascot/"+value.name+".png";
     image.style.width="200px";
     td.append(image)
@@ -396,22 +401,35 @@ const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : m
     bar=document.createElement('div');
     bar.style.marginLeft="10px";
     bar.style.background="blue";
-    if((maxValue/1000)<100) {
-        bar.style.height=(deal.avg/1000+80).toString()+"px"
-    }else if((maxValue/1000)>200){
+
+    /////////////////////////////////////////////////////////////
+    if((maxValue/10000)>150) {
         bar.style.height=(deal.avg/1000-100).toString()+"px"
-    }else if((maxValue/1000)>170){
-        bar.style.height=(deal.avg/1000-70).toString()+"px"
-    }else if((minValue/1000)<80){
-        bar.style.height=(deal.avg/1000+60).toString()+"px"
-    }else if((minValue/1000)<110){
-        bar.style.height=(deal.avg/1000+30).toString()+"px"
-    }else
-    {
-        bar.style.height=(deal.avg/1000).toString()+"px"
+    }else if((maxValue/10000)>200){
+        bar.style.height=(deal.avg/1000-200).toString()+"px"
+    }else if((maxValue/10000)>300){
+        bar.style.height=(deal.avg/1000-300).toString()+"px"
+    }else if((maxValue/10000)>400){
+        bar.style.height=(deal.avg/1000-400).toString()+"px"
+    }else if((maxValue/10000)>500){
+        bar.style.height=(deal.avg/1000-500).toString()+"px"
+     }else if((maxValue/10000)>600){
+        bar.style.height=(deal.avg/1000-600).toString()+"px"
+    }else if((maxValue/1000)<50){
+        bar.style.height=(deal.avg/1000+50).toString()+"px"
     }
-
-
+//    else if((maxValue/1000)>170){
+//        bar.style.height=(deal.avg/1000-70).toString()+"px"
+//    }else if((minValue/1000)<80){
+//        bar.style.height=(deal.avg/1000+60).toString()+"px"
+//    }else if((minValue/1000)<110){
+//        bar.style.height=(deal.avg/1000+30).toString()+"px"
+//    }else
+//    {
+//        bar.style.height=(deal.avg/1000).toString()+"px"
+//    }
+//////////////////////////////////////////////////////////////////
+//bar.style.height=(deal.avg/1000+50).toString()+"px"
     bar.style.width="50px"
     bar.style.display="flex"
     bar.style.flexDirection="column"
@@ -448,7 +466,7 @@ const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : m
 
 
 
-    selectApart.classList.remove('display')
-    selectDeal.classList.add('display')
+//    selectApart.classList.remove('display')
+//    selectDeal.classList.add('display')
     })
 }

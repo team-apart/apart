@@ -19,7 +19,7 @@ def get_dongs():
         )
         cursor = con.cursor()
      # 3. sql문 작성한 후 sql문을 db서버에 보내자.
-        sql = "select SIGUDONG.GU_NM,SIGUDONG.DONG_NM from SIGUDONG "
+        sql = "select SIGUDONG.GU_NM,SIGUDONG.DONG_NM from SIGUDONG where GUBN <> '폐기'"
         result = cursor.execute(sql);
         print(result); # insert, update, delete의 결과는 정수값!
         # 실행된 결과의 행수(레코드 개수)
@@ -104,7 +104,7 @@ def get_deal(aparts:List[str]):
             SIGUDONG.GU_NM,
             SIGUDONG.DONG_NM,
             APART.APART_NM,
-            DEAL.SIZE,
+            FLOOR(DEAL.SIZE) AS SIZE,
             YEAR(DEAL.CONTRACT_YMD) AS year,
             MONTH(DEAL.CONTRACT_YMD) AS month,
             AVG(ROUND(DEAL.PRICE, 1)) AS average
@@ -173,7 +173,7 @@ def get_deal_apart(apart: str):
                 DEAL.GU_CD,
                 DEAL.DONG_CD,
                 DEAL.APART_CD,
-                DEAL.SIZE,
+                FLOOR(DEAL.SIZE) AS SIZE,
                 DEAL.CONTRACT_YM,
                 DEAL.CONTRACT_YMD,
                 DEAL.average
@@ -199,7 +199,7 @@ def get_deal_apart(apart: str):
              YEAR(DEAL.CONTRACT_YMD),
              MONTH(DEAL.CONTRACT_YMD)
             ) t
-            WHERE rn <= 12
+            WHERE rn <= 24
             ORDER BY APART_CD, SIZE, YEAR DESC, MONTH DESC;
 
         """
