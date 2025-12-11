@@ -56,13 +56,18 @@ leftBtn.addEventListener('click',function(){
 if(status.innerHTML>0 && status.innerHTML<=1){
     leftBtn.style.display="none"
     rightBtn.style.display="none"
-
     selectDong.classList.remove('display')
+//    selectDong.innerHtml=""
+        selectApart.innerHtml=""
+        selectDeal.innerHtml=""
 }
 if(status.innerHTML>1 && status.innerHTML<=2){
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
     selectDeal.classList.remove('display')
+    selectDong.innerHtml=""
+//        selectApart.innerHtml=""
+        selectDeal.innerHtml=""
     if(selectedDong.length>=1){
         rightBtn.style.display="block"
         }
@@ -70,6 +75,9 @@ if(status.innerHTML>1 && status.innerHTML<=2){
 if(status.innerHTML>2 && status.innerHTML<=3){
 selectApart.classList.add('display')
 selectDeal.classList.remove('display')
+selectDong.innerHtml=""
+        selectApart.innerHtml=""
+        selectDeal.innerHtml=""
 if(selectedDong.length>=1){
         rightBtn.style.display="block"
         }
@@ -85,11 +93,16 @@ rightBtn.addEventListener('click',function(){
     if(status.innerHTML<3)status.innerHTML=1+parseInt(status.innerHTML)
     if(status.innerHTML>0 && status.innerHTML<=1){
         selectDong.classList.add('display')
+        selectApart.innerHtml=""
+        selectDeal.innerHtml=""
         rightBtn.style.display="none"
 
     }
     if(status.innerHTML>1 && status.innerHTML<=2){
      rightBtn.style.display="none"
+        selectDong.innerHtml=""
+//        selectApart.innerHtml=""
+        selectDeal.innerHtml=""
         selectedApartCommit()
 
     }
@@ -97,6 +110,9 @@ rightBtn.addEventListener('click',function(){
      rightBtn.style.display="none"
         selectedDealCommit()
         selectApart.classList.remove('display')
+        selectDong.innerHtml=""
+        selectApart.innerHtml=""
+//        selectDeal.innerHtml=""
 
     }
 
@@ -228,10 +244,11 @@ async function selectedApartCommit(){
 try{
     const aparts=await axios.get('http://localhost:8000/getApart')
     console.log('aparts',aparts)
+    console.log(selectedDong)
     const results=selectedDong.map(dong=>aparts.data.filter(apart=>apart.name===dong))
+    if(results.length===0)return;
 
-
-    console.log('results',results)
+//    console.log('results',results)
     results.forEach(result=>result.forEach(re=>{tableValues.push(re)}))
     createApartTable(tableValues)
 }catch(e){console.error(e)}
@@ -301,7 +318,7 @@ async function selectedDealCommit(){
     dealTbody.innerHTML="";
 
 try{
-
+    console.log('selectedApart',selectedApart)
     const deals=await axios.post('http://localhost:8000/getDeals',selectedApart)
     totaldeals=deals['data']
 //    const results=selectedApart.map(apt=>deals.data.filter(deal=>deal.aptName.replace(deal.dongName,"")===apt))
@@ -423,7 +440,7 @@ const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : m
 
 
 
-//    selectApart.classList.remove('display')
+    selectApart.classList.remove('display')
     selectDeal.classList.add('display')
     })
 }

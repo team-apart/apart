@@ -87,7 +87,7 @@ def read_all():
                             port=3307,
                             user='root',
                             password='1234',
-                            db='shop2',
+                            db='apart2',
                             cursorclass=DictCursor
                             )
         cursor = con.cursor()
