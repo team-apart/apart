@@ -103,6 +103,7 @@ rightBtn.addEventListener('click',function(){
         selectDong.classList.remove('display')
         selectApart.classList.add('display')
         selectDeal.classList.remove('display')
+        apartTbody.innerHTML=""
         selectedApartCommit()
 
     }
@@ -112,13 +113,9 @@ rightBtn.addEventListener('click',function(){
         selectApart.classList.remove('display')
         selectDong.classList.remove('display')
         selectDeal.classList.add('display')
+        dealTbody.innerHTML=""
         selectedDealCommit()
-
     }
-
-
-
-
 })
 const selectedGu=[]
 const selectedDong=[]
@@ -170,6 +167,7 @@ async function selectedDongCommit(){
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
     selectDeal.classList.remove('display')
+    dongTbody.innerHTML=""
 
 
 try{
@@ -196,11 +194,12 @@ function createDongTable(values){
     td.append(image)
     tr.append(td)
     const dongname=document.createElement('td')
+    dongname.style.paddingLeft="30px";
+    dongname.style.width='500px';
     dongname.style.verticalAlign="top";
     dongname.style.display="flex";
     dongname.style.justifyContent="flex-start";
     dongname.style.alignItems="flex-start"
-    dongname.style.width='800px';
     dongname.style.flexWrap="wrap"
     value.dong.forEach(don=>{
     const div=document.createElement('div');
@@ -261,6 +260,7 @@ function createApartTable(values){
     const tr=document.createElement('tr')
     const td=document.createElement('td')
     const image=document.createElement('img')
+
     td.style.fontSize="20px"
     td.style.border="2px solid black"
     td.style.height="200px";
@@ -272,11 +272,12 @@ function createApartTable(values){
     td.append(image)
     tr.append(td)
     const dongname=document.createElement('td')
-    dongname.style.verticalAlign="top";
+
     dongname.style.display="flex";
     dongname.style.justifyContent="flex-start";
     dongname.style.alignItems="flex-start"
-    dongname.style.width='800px';
+    dongname.style.paddingLeft="30px";
+    dongname.style.width='500px';
     dongname.style.flexWrap="wrap"
     value.apart.forEach(apt=>{
     const div=document.createElement('div');
@@ -377,7 +378,7 @@ function createDealTable(values){
     dealInfo.style.display="flex";
     dealInfo.style.justifyContent="flex-start";
     dealInfo.style.alignItems="flex-end"
-    dealInfo.style.width='1000px';
+    dealInfo.style.width='500px';
     dealInfo.style.flexWrap="wrap"
 //    dealInfo.style.background="green"
 //    dealInfo.style.lineHeight="1.2";
@@ -392,7 +393,7 @@ function createDealTable(values){
 const maxValue = value.deals.reduce((max, item) => item.avg > max ? item.avg : max, -Infinity);
 const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : min, -Infinity);
 
-
+console.log('maxValue',maxValue)
 
 
 
@@ -403,18 +404,18 @@ const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : m
     bar.style.background="blue";
 
     /////////////////////////////////////////////////////////////
-    if((maxValue/10000)>150) {
-        bar.style.height=(deal.avg/1000-100).toString()+"px"
-    }else if((maxValue/10000)>200){
-        bar.style.height=(deal.avg/1000-200).toString()+"px"
-    }else if((maxValue/10000)>300){
-        bar.style.height=(deal.avg/1000-300).toString()+"px"
-    }else if((maxValue/10000)>400){
-        bar.style.height=(deal.avg/1000-400).toString()+"px"
-    }else if((maxValue/10000)>500){
-        bar.style.height=(deal.avg/1000-500).toString()+"px"
-     }else if((maxValue/10000)>600){
-        bar.style.height=(deal.avg/1000-600).toString()+"px"
+    if((maxValue/1000)>600) {
+        bar.style.height=(deal.avg/1000/3.5).toString()+"px"
+    }else if((maxValue/1000)>500){
+        bar.style.height=(deal.avg/1000/3).toString()+"px"
+    }else if((maxValue/1000)>500){
+        bar.style.height=(deal.avg/1000/2.5).toString()+"px"
+    }else if((maxValue/1000)>300){
+        bar.style.height=(deal.avg/1000/2.3).toString()+"px"
+    }else if((maxValue/1000)>200){
+        bar.style.height=(deal.avg/1000-130).toString()+"px"
+     }else if((maxValue/1000)>150){
+        bar.style.height=((deal.avg/1000)-100).toString()+"px"
     }else if((maxValue/1000)<50){
         bar.style.height=(deal.avg/1000+50).toString()+"px"
     }
