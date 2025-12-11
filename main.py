@@ -47,12 +47,13 @@ def get_Apart():
     result_dict=defaultdict(list)
     for item in data:
         result_dict[item["DONG_NM"]].append(item["APART_NM"])
-    result=[{"name":DONG_NM,"apart":APART_NM} for DONG_NM,APART_NM in result_dict.items()]
-    # print('result',result)
+    result=[{"name":DONG_NM,"apart": [DONG_NM + " " + apt for apt in APART_NM]}
+    for DONG_NM,APART_NM in result_dict.items()]
+    # print('result18',result)
     return result
 
 def group_deals(raw: List[Any]) -> List[Dict[str, Any]]:
-    print('raw',raw)
+    # print('raw',raw)
     """
     raw: 입력이 [{...}, ...] 또는 [[{...}, ...], [{...}, ...], ...] 같은 1~2차원 리스트일 수 있음.
     반환: [{'dong':..., 'apart':..., 'area':..., 'deals':[{'year':..., 'month':..., 'avg': Decimal(...)}, ...]}, ...]
@@ -95,20 +96,20 @@ def group_deals(raw: List[Any]) -> List[Dict[str, Any]]:
 
 @app.post('/getDeals')
 async def get_Deal(payload: List[str]):
-    print('payload',payload)
+    # print('payload',payload)
     data=db.get_deal(payload)
-    print('data',data)
+    # print('data',data)
     result=group_deals(data)
-    print('result=',result)
+    # print('result=',result)
     return result
 
 @app.post('/quick')
 async def get_Deal_apart(payload: str=Body(...)):
-    print( payload)
+    # print( payload)
     data=db.get_deal_apart(payload)
 
     result=group_deals(data)
-    print('result=',result)
+    # print('result=',result)
     return result
 # ---------------------------------------------------------------
 
