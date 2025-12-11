@@ -155,6 +155,7 @@ if(!selectedDong.includes(dong)){
 
 }
 function selectAPT(apt){
+console.log('apt',apt)
     if(!selectedApart.includes(apt)){
         selectedApart.push(apt)
 
@@ -240,21 +241,22 @@ async function selectedApartCommit(){
     // status.innerText=2
     const tableValues=[];
     apartTbody.innerHTML="";
-    console.log('selectedDong',selectedDong)
+//    console.log('selectedDong',selectedDong)
 try{
     const aparts=await axios.get('http://localhost:8000/getApart')
-    console.log('aparts',aparts)
-    console.log(selectedDong)
+//    console.log('aparts',aparts)
+//    console.log('selectedDong',selectedDong)
     const results=selectedDong.map(dong=>aparts.data.filter(apart=>apart.name===dong))
     if(results.length===0)return;
 
 //    console.log('results',results)
     results.forEach(result=>result.forEach(re=>{tableValues.push(re)}))
+//    console.log('tableValues',tableValues)
     createApartTable(tableValues)
 }catch(e){console.error(e)}
 }
 function createApartTable(values){
-    console.log('values',values)
+//    console.log('values',values)
     const tag=values.map(value=>{
     const tr=document.createElement('tr')
     const td=document.createElement('td')
@@ -332,7 +334,7 @@ try{
 }
 //------------------------------------------------------------------------------
 function createDealTable(values){
-    console.log('values',values)
+//    console.log('values',values)
     const tag=values.map(value=>{
     const tr=document.createElement('tr')
     tr.style.display="flex";

@@ -54,7 +54,7 @@ def get_apart():
 
 
         result = cursor.execute(sql);
-        print(result); # insert, update, delete의 결과는 정수값!
+        # print(result); # insert, update, delete의 결과는 정수값!
         # 실행된 결과의 행수(레코드 개수)
         if result >= 1 :
             print("아파트 검색 성공!!! ")
@@ -71,6 +71,8 @@ def get_apart():
     # print('rows',rows)
     return rows
 
+
+
 def transform(arr):
     result = []
     for s in arr:
@@ -82,7 +84,7 @@ def transform(arr):
 
 def get_deal(aparts:List[str]):
     arrs=transform(aparts)
-    print('arrs',arrs)
+    print('[아파트,아파트 네임]',arrs)
 
     try:
         con = mysql.connect(
@@ -129,8 +131,9 @@ def get_deal(aparts:List[str]):
         # print(sql)
         resultDealInfo=[]
         for arr in arrs:
-            result = cursor.execute(sql,arr);
-            print(result); # insert, update, delete의 결과는 정수값!
+            print('name',[arr[0],arr[1].replace(arr[0], "")])
+            result = cursor.execute(sql,[arr[0],arr[1].replace(arr[0],"").strip()]);
+            print('result',result); # insert, update, delete의 결과는 정수값!
             # 실행된 결과의 행수(레코드 개수)
             if result >= 1 :
                 print("아파트 검색 성공!!! ")
@@ -145,7 +148,7 @@ def get_deal(aparts:List[str]):
     except IntegrityError as ie:
         print("무결성 에러 발생함.")
         print(ie)  # 에러 정보 출력
-    # print('resultDealInfo',resultDealInfo)
+    print('resultDealInfo',resultDealInfo)
     return resultDealInfo
 
 
