@@ -327,11 +327,11 @@ main .selectForm{
 }
 main .selectForm .selectDong{
     width:70%;
-    height:100vh;
+
     position:absolute;
     left:-100%;
     transition:1s;
-    opacity: .7;
+    opacity: .9;
     background:white;
 
 
@@ -343,7 +343,7 @@ main .selectForm .selectApart{
     position:absolute;
     left:120%;
     transition:1s;
-    opacity: .7;
+    opacity: .9;
     background:white;
 
 
@@ -352,36 +352,57 @@ main .selectForm .selectApart{
 main .selectForm .selectDeal{
     position:absolute;
     width:45%;
-    transition:translateX(-50%);
+    transform:translateX(-50%);
     position:absolute;
     top:1000px;
-    left:20%;
+    left:50%;
     transition:1s;
-    opacity: .7;
+    opacity: .9;
     background:white;
+
+
 
 
 
 }
 main .selectForm .selectDeal.display{
     position:absolute;
-
-    transition:translateX(-50%);
-    top:-10px;
+    width:45%;
+    left:50%;
+    transform:translateX(-50%);
+top:0;
     transition:1s;
-    margin:auto 0;
+
+     box-shadow:8px 8px  8px #333;
+
+
+
 }
 
 main .selectForm .selectDong.display{
-    left:20%;
+
+    position:absolute;
+    width:50%;
+    left:50%;
+    transform:translateX(-50%);
+
     transition:1s;
-    transition:translateX(-50%)
+
+    box-shadow:8px 8px  8px #333;
+
+
 
 }
 
 main .selectForm .selectApart.display{
-    left:20%;
+    position:absolute;
+    width:50%;
+    left:50%;
+    transform:translateX(-50%);
+
     transition:1s;
+
+    box-shadow:8px 8px  8px #333;
 
 }
 
@@ -405,6 +426,7 @@ main .goNext{
     width:100%;
     display:flex;
     z-index:0;
+
 }
 
 main .goNext .leftArrow{
@@ -412,6 +434,7 @@ main .goNext .leftArrow{
 }
 main .goNext .leftArrow img{
     margin-left:15%;
+    transform:translateX(-15%)
 
 
 }
@@ -420,4 +443,5 @@ main .goNext .rightArrow{
 }
 main .goNext .rightArrow img{
     margin-left:85%;
+     transform:translateX(-85%)
 }

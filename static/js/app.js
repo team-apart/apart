@@ -57,17 +57,19 @@ if(status.innerHTML>0 && status.innerHTML<=1){
     leftBtn.style.display="none"
     rightBtn.style.display="none"
     selectDong.classList.remove('display')
-//    selectDong.innerHtml=""
-        selectApart.innerHtml=""
-        selectDeal.innerHtml=""
+//        dongTbody.innerHTML =""
+        apartTbody.innerHTML =""
+        dealTbody.innerHTML =""
 }
 if(status.innerHTML>1 && status.innerHTML<=2){
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
     selectDeal.classList.remove('display')
-    selectDong.innerHtml=""
-//        selectApart.innerHtml=""
-        selectDeal.innerHtml=""
+
+    dongTbody.innerHTML =""
+//    apartTbody.innerHTML =""
+    dealTbody.innerHTML =""
+
     if(selectedDong.length>=1){
         rightBtn.style.display="block"
         }
@@ -75,9 +77,9 @@ if(status.innerHTML>1 && status.innerHTML<=2){
 if(status.innerHTML>2 && status.innerHTML<=3){
 selectApart.classList.add('display')
 selectDeal.classList.remove('display')
-selectDong.innerHtml=""
-        selectApart.innerHtml=""
-        selectDeal.innerHtml=""
+        dongTbody.innerHTML =""
+//        apartTbody.innerHTML =""
+        dealTbody.innerHTML =""
 if(selectedDong.length>=1){
         rightBtn.style.display="block"
         }
@@ -93,28 +95,32 @@ rightBtn.addEventListener('click',function(){
     if(status.innerHTML<3)status.innerHTML=1+parseInt(status.innerHTML)
     if(status.innerHTML>0 && status.innerHTML<=1){
         selectDong.classList.add('display')
-        selectApart.innerHtml=""
-        selectDeal.innerHtml=""
+        dongTbody.innerHTML =""
+        apartTbody.innerHTML =""
+        dealTbody.innerHTML =""
+
         rightBtn.style.display="none"
 
     }
     if(status.innerHTML>1 && status.innerHTML<=2){
      rightBtn.style.display="none"
-        selectDong.innerHtml=""
-//        selectApart.innerHtml=""
-        selectDeal.innerHtml=""
+        dongTbody.innerHTML =""
+        apartTbody.innerHTML =""
+        dealTbody.innerHTML =""
         selectedApartCommit()
 
     }
     if(status.innerHTML>2 && status.innerHTML<=3){
      rightBtn.style.display="none"
-        selectedDealCommit()
+
         selectApart.classList.remove('display')
-        selectDong.innerHtml=""
-        selectApart.innerHtml=""
-//        selectDeal.innerHtml=""
+        dongTbody.innerHTML =""
+        apartTbody.innerHTML =""
+        dealTbody.innerHTML =""
+        selectedDealCommit()
 
     }
+
 
 
 
