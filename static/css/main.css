@@ -327,7 +327,7 @@ main .selectForm{
 
 }
 main .selectForm .selectDong{
-    width:70%;
+    width:0;
     position:absolute;
     left:-100%;
     transition:1s;
@@ -340,7 +340,7 @@ main .selectForm .selectDong{
 
 }
 main .selectForm .selectApart{
-    width:70%;
+    width:0;
     position:absolute;
     left:120%;
     transition:1s;
@@ -353,7 +353,7 @@ main .selectForm .selectApart{
 }
 main .selectForm .selectDeal{
     position:absolute;
-    width:45%;
+    width:0;
     transform:translateX(-50%);
     position:absolute;
     top:1000px;
@@ -370,7 +370,7 @@ main .selectForm .selectDeal{
 }
 main .selectForm .selectDeal.display{
     position:absolute;
-    width:45%;
+    width:50%;
     left:50%;
     transform:translateX(-50%);
     top:0;

@@ -378,7 +378,8 @@ function createDealTable(values){
     dealInfo.style.display="flex";
     dealInfo.style.justifyContent="flex-start";
     dealInfo.style.alignItems="flex-end"
-    dealInfo.style.width='500px';
+    dealInfo.style.width='800px';
+
     dealInfo.style.flexWrap="wrap"
 //    dealInfo.style.background="green"
 //    dealInfo.style.lineHeight="1.2";
