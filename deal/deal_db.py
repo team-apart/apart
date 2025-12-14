@@ -101,26 +101,30 @@ def get_deal(aparts:List[str]):
 
         sql="""
             SELECT
+            DEAL.ID,
             SIGUDONG.GU_NM,
             SIGUDONG.DONG_NM,
             APART.APART_NM,
             FLOOR(DEAL.SIZE) AS SIZE,
             YEAR(DEAL.CONTRACT_YMD) AS year,
             MONTH(DEAL.CONTRACT_YMD) AS month,
-            AVG(ROUND(DEAL.PRICE, 1)) AS average
+            AVG(ROUND(DEAL.PRICE, 1)) AS average,
+            FAVORITE.FAVORITE
             FROM DEAL 
             JOIN SIGUDONG ON DEAL.GU_CD=SIGUDONG.GU_CD AND DEAL.DONG_CD=SIGUDONG.DONG_CD
             JOIN APART ON SIGUDONG.GU_CD=APART.GU_CD AND SIGUDONG.DONG_CD=APART.DONG_CD
+            LEFT JOIN FAVORITE ON DEAL.ID=FAVORITE.FAVORITE
             WHERE  SIGUDONG.DONG_NM=%s
                 AND APART.APART_NM=%s
             GROUP BY
+                DEAL.ID,
                 DEAL.GU_CD,
                 DEAL.DONG_CD,
                 DEAL.APART_CD,
                 DEAL.SIZE,
                 YEAR(DEAL.CONTRACT_YMD),
-                MONTH(DEAL.CONTRACT_YMD)
-                
+                MONTH(DEAL.CONTRACT_YMD),
+                FAVORITE.FAVORITE
             ORDER BY
                 DEAL.APART_CD,
                 DEAL.SIZE,
@@ -152,76 +156,6 @@ def get_deal(aparts:List[str]):
     return resultDealInfo
 
 
-def get_deal_apart(apart: str):
-
-    print(apart)
-
-    try:
-        con = mysql.connect(
-            host='localhost',
-            port=3307,
-            user='root',
-            password='1234',
-            db='apart2',
-            cursorclass=DictCursor
-        )
-        cursor = con.cursor()
-        # 3. sql문 작성한 후 sql문을 db서버에 보내자.
-
-        sql="""
-            SELECT 
-                DEAL.GU_CD,
-                DEAL.DONG_CD,
-                DEAL.APART_CD,
-                FLOOR(DEAL.SIZE) AS SIZE,
-                DEAL.CONTRACT_YM,
-                DEAL.CONTRACT_YMD,
-                DEAL.average
-            FROM (
-                SELECT 
-                DEAL.GU_CD,
-                DEAL.DONG_CD,
-                APART.APART_NM,
-                DEAL.SIZE,
-                YEAR(DEAL.CONTRACT_YMD) AS year,
-                MONTH(DEAL.CONTRACT_YMD) AS month,
-                AVG(ROUND(DEAL.PRICE, 1)) AS average,
-                ROW_NUMBER() OVER (
-                PARTITION BY DEAL.APART_CD, DEAL.SIZE
-                ORDER BY YEAR(DEAL.CONTRACT_YMD) DESC, MONTH(DEAL.CONTRACT_YMD) DESC
-                ) AS rn
-            FROM DEAL JOIN APART ON DEAL.APART_CD=APART.APART_CD
-            WHERE APART.APART_NM LIKE %s
-            GROUP BY DEAL.GU_CD,
-             DEAL.DONG_CD,
-             DEAL.APART_CD,
-             DEAL.SIZE,
-             YEAR(DEAL.CONTRACT_YMD),
-             MONTH(DEAL.CONTRACT_YMD)
-            ) t
-            WHERE rn <= 24
-            ORDER BY APART_CD, SIZE, YEAR DESC, MONTH DESC;
-
-        """
-
-        result = cursor.execute(sql, ("%"+apart));
-        # print(result) # insert, update, delete의 결과는 정수값!
-        # 실행된 결과의 행수(레코드 개수)
-        if result >= 1:
-            print("아파트 검색 성공!!! ")
-            rows = cursor.fetchall();
-
-
-        # 4. 보낸 sql문을 바로 실행해줘(반영해줘.)
-        con.commit();
-
-        # 5. 커넥션 close
-        con.close();
-    except IntegrityError as ie:
-        print("무결성 에러 발생함.")
-        print(ie)  # 에러 정보 출력
-    # print('resultDealInfo', rows)
-    return rows
 
 # ----------------------------------------------------------
 

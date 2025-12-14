@@ -327,44 +327,52 @@ main .selectForm{
 
 }
 main .selectForm .selectDong{
-    width:0;
     position:absolute;
-    left:-100%;
+    width:0;
+    left:0;
+    transform:translateX(-50%) rotate3d(0, 1, 0, 90deg);
     transition:1s;
-    opacity: .9;
     background:white;
-    display:none;
+    transform-origin:left;
 
-
+}
+main .selectForm .selectDong.display{
+     position:absolute;
+    width:50%;
+    left:50%;
+    transform:translateX(-50%) rotate3d(0, 1, 0, 0deg);
+    transition:1s;
+    box-shadow:8px 8px  8px #333;
+}
+main .selectForm .selectApart{
+    position:absolute;
+    width:0;
+    right:0;
+    transform:translateX(-50%) rotate3d(0, 1, 0, 90deg);
+    transition:1s;
+    background:white;
+    transform-origin:left;
 
 
 }
-main .selectForm .selectApart{
-    width:0;
+main .selectForm .selectApart.display{
     position:absolute;
-    left:120%;
+    width:50%;
+    right:0;
+    transform:translateX(-50%) rotate3d(0, 1, 0, 0deg);
     transition:1s;
-    opacity: .9;
-    background:white;
-    display:none;
-
-
+    box-shadow:8px 8px  8px #333;
 
 }
 main .selectForm .selectDeal{
     position:absolute;
-    width:0;
-    transform:translateX(-50%);
-    position:absolute;
-    top:1000px;
+    width:50%;
     left:50%;
+    transform-origin:top;
+     transform:translateX(-50%) rotate3d(1, 0, 0, 90deg);
+    top:1000px;
     transition:1s;
-    opacity: .9;
     background:white;
-    display:none;
-
-
-
 
 
 }
@@ -372,38 +380,28 @@ main .selectForm .selectDeal.display{
     position:absolute;
     width:50%;
     left:50%;
-    transform:translateX(-50%);
+     transform:translateX(-50%) rotate3d(1, 0, 0, 0deg);
     top:0;
     transition:1s;
     box-shadow:8px 8px  8px #333;
-    display:block;
-
-
 
 }
 
-main .selectForm .selectDong.display{
-
-    position:absolute;
-    width:50%;
-    left:50%;
-    transform:translateX(-50%);
-    transition:1s;
-    box-shadow:8px 8px  8px #333;
-    display:block;
-
-
+.material-symbols-outlined {
+  display: inline-block;
+  padding: 4px;
+  cursor:pointer;
 }
 
-main .selectForm .selectApart.display{
-    position:absolute;
-    width:50%;
-    left:50%;
-    transform:translateX(-50%);
-    transition:1s;
-    box-shadow:8px 8px  8px #333;
-    display:block;
+.material-symbols-outlined.checked {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+    color: red; /* ✅ 빨간색으로 채움 */
 }
+
 
 
 

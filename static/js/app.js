@@ -20,6 +20,11 @@ const goNext=document.querySelector('.goNext')
 
 const left=goNext.querySelector('.leftArrow')
 const leftBtn=left.querySelector('img')
+
+const heart=document.querySelector('.material-symbols-outlined')
+
+const favorite=document.querySelector('.favorite')
+
 leftBtn.style.display="none"
 const right=goNext.querySelector('.rightArrow')
 const rightBtn=right.querySelector('img')
@@ -47,10 +52,13 @@ searchInputEl.addEventListener('change', async function (e) {
 
 
     createDealTable(result.data)
+    selectDeal.classList.add('display')
     searchInputEl.value=""
 
 })
-
+const selectedGu=[]
+const selectedDong=[]
+const selectedApart=[]
 
 leftBtn.addEventListener('click',function(){
 if(status.innerHTML>0 && status.innerHTML<=1){
@@ -59,15 +67,21 @@ if(status.innerHTML>0 && status.innerHTML<=1){
     selectDong.classList.remove('display')
     selectApart.classList.remove('display')
     selectDeal.classList.remove('display')
-//    selectedGu=[]
+    selectedDong.length=0
+    setTimeout(()=>{
 
+    },2000)
 
 }
 if(status.innerHTML>1 && status.innerHTML<=2){
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
     selectDeal.classList.remove('display')
-//    selectedDong=[]
+    selectedApart.length=0
+    setTimeout(()=>{
+
+    },2000)
+
 
     if(selectedDong.length>=1){
         rightBtn.style.display="block"
@@ -77,7 +91,10 @@ if(status.innerHTML>2 && status.innerHTML<=3){
     selectDong.classList.remove('display')
     selectApart.classList.add('display')
     selectDeal.classList.remove('display')
-//    selectedApart=[]
+    setTimeout(()=>{
+
+    },2000)
+
 if(selectedDong.length>=1){
         rightBtn.style.display="block"
         }
@@ -117,9 +134,7 @@ rightBtn.addEventListener('click',function(){
         selectedDealCommit()
     }
 })
-const selectedGu=[]
-const selectedDong=[]
-const selectedApart=[]
+
 
 
 function addRegion(city){
@@ -163,6 +178,7 @@ console.log('apt',apt)
 async function selectedDongCommit(){
     status.innerText=1
     const tableValues=[];
+    selectedDong.length=0;
     leftBtn.style.display="block"
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
@@ -179,6 +195,9 @@ try{
 }
 
 function createDongTable(values){
+console.log('dongValues',values)
+values.map(value=>value.dong.sort());
+
     const tag=values.map(value=>{
     const tr=document.createElement('tr')
     const td=document.createElement('td')
@@ -239,6 +258,7 @@ function createDongTable(values){
 async function selectedApartCommit(){
     // status.innerText=2
     const tableValues=[];
+
     apartTbody.innerHTML="";
 //    console.log('selectedDong',selectedDong)
 try{
@@ -255,7 +275,8 @@ try{
 }catch(e){console.error(e)}
 }
 function createApartTable(values){
-//    console.log('values',values)
+    console.log('apartValues',values)
+    values.map(value=>value.apart.sort());
     const tag=values.map(value=>{
     const tr=document.createElement('tr')
     const td=document.createElement('td')
@@ -320,6 +341,7 @@ async function selectedDealCommit(){
     const tableValues=[];
     dealTbody.innerHTML="";
 
+
 try{
     console.log('selectedApart',selectedApart)
     const deals=await axios.post('http://localhost:8000/getDeals',selectedApart)
@@ -335,16 +357,18 @@ try{
 }
 //------------------------------------------------------------------------------
 function createDealTable(values){
-//    console.log('values',values)
+    console.log('totaldeals',values)
+    dealTbody.innerHTML=""
     values.sort((a,b)=>
     a.area-b.area)
-    const tag=values.map(value=>{
+    const tag=values.map((value,index)=>{
     const tr=document.createElement('tr')
     tr.style.display="flex";
     tr.style.alignItems="flex-end";
 
     const td=document.createElement('td')
     const image=document.createElement('img')
+
     td.style.fontSize="20px"
     td.style.border="2px solid black"
     td.style.height="200px";
@@ -353,11 +377,45 @@ function createDealTable(values){
     td.style.justifyContent="flex-end";
     td.style.alignItems="center";
     td.style.flexDirection="column"
+    const favorite=document.createElement('span')
+    favorite.classList.add("material-symbols-outlined")
+    favorite.innerText='favorite'
+
+
+
+    if(value.fav!==null){
+    favorite.classList.add('checked')
+    }else{
+    favorite.classList.remove('checked')
+    }
+
+
+
+    td.append(favorite)
+    favorite.addEventListener('click',async function(){
+    if(this.classList.contains('checked')){
+    this.classList.remove('checked')
+    favoriteId=values[index].id
+ console.log('favoriteId',favoriteId)
+    result=await axios.post('http://localhost:8000/favorite_del',favoriteId)
+    }else{
+    this.classList.add('checked')
+    favoriteId=values[index].id
+
+    console.log(typeof(favoriteId))
+
+    result=await axios.post('http://localhost:8000/favorite',favoriteId)
+    console.log(result.data)
+    }
+    })
 
 //    td///////////////////////////////////////동 입력
     p=document.createElement('p')
     p.innerText=value.dong
     td.append(p)
+
+
+
     p=document.createElement('p')
     p.innerText=value.apart.replace(value.dong,"")
     td.append(p)
@@ -365,6 +423,7 @@ function createDealTable(values){
     unit=document.createElement('sup')
     p.innerText=value.area+"m2"
     td.append(p)
+
 
 
 //    image.src="/static/img/mascot/"+value.name+".png";
@@ -394,7 +453,7 @@ function createDealTable(values){
 const maxValue = value.deals.reduce((max, item) => item.avg > max ? item.avg : max, -Infinity);
 const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : min, -Infinity);
 
-console.log('maxValue',maxValue)
+console.log('maxValue',maxValue/1000)
 
 
 
@@ -420,18 +479,7 @@ console.log('maxValue',maxValue)
     }else if((maxValue/1000)<50){
         bar.style.height=(deal.avg/1000+50).toString()+"px"
     }
-//    else if((maxValue/1000)>170){
-//        bar.style.height=(deal.avg/1000-70).toString()+"px"
-//    }else if((minValue/1000)<80){
-//        bar.style.height=(deal.avg/1000+60).toString()+"px"
-//    }else if((minValue/1000)<110){
-//        bar.style.height=(deal.avg/1000+30).toString()+"px"
-//    }else
-//    {
-//        bar.style.height=(deal.avg/1000).toString()+"px"
-//    }
-//////////////////////////////////////////////////////////////////
-//bar.style.height=(deal.avg/1000+50).toString()+"px"
+
     bar.style.width="50px"
     bar.style.display="flex"
     bar.style.flexDirection="column"
@@ -472,3 +520,11 @@ console.log('maxValue',maxValue)
 //    selectDeal.classList.add('display')
     })
 }
+favorite.addEventListener('click',async()=>{
+const result=await axios.get("http://localhost:8000/getFavorite")
+
+createDealTable(result.data)
+selectDeal.classList.add('display')
+selectApart.classList.remove('display')
+selectDong.classList.remove('display')
+})

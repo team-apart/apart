@@ -7,7 +7,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from collections import defaultdict
 from typing import List, Dict, Any
 
+from websockets.sync.client import connect_socks_proxy
+
 from deal import deal_db as db
+from deal import fav_db as fav_db
+from deal import search_db as search_db
+from deal import learn_db as learn_db
 import chart_db as ch
 
 # FastAPI 앱 인스턴스 생성
@@ -69,17 +74,21 @@ def group_deals(raw: List[Any]) -> List[Dict[str, Any]]:
     # 2) 그룹화: (dongName, aptName, area)를 키로 묶음
     grouped = {}
     for r in rows:
+        id=r.get('ID')
         dong = r.get("DONG_NM")
         apt = r.get("APART_NM")
         area = r.get("SIZE")
+        fav=r.get("FAVORITE")
 
         key = (dong, apt, area)
 
         if key not in grouped:
             grouped[key] = {
+                "id":id,
                 "dong": dong,
                 "apart": apt,
                 "area": area,
+                "fav":fav,
                 "deals": []
             }
 
@@ -105,11 +114,31 @@ async def get_Deal(payload: List[str]):
 
 @app.post('/quick')
 async def get_Deal_apart(payload: str=Body(...)):
-    # print( payload)
-    data=db.get_deal_apart(payload)
-
+    print(payload)
+    data=search_db.get_deal_apart(payload)
     result=group_deals(data)
-    # print('result=',result)
+    return result
+
+
+@app.post('/favorite')
+async def save_fav(favorite:int=Body()):
+    print('favorite',favorite)
+    data=fav_db.write_fav(favorite)
+    return data
+
+@app.post('/favorite_del')
+async def save_fav(favorite:int=Body()):
+    print('favorite',favorite)
+    data=fav_db.remove_fav(favorite)
+    return data
+
+
+@app.get('/getFavorite')
+async def get_fav():
+    favorite=fav_db.get_fav()
+
+    result = group_deals(favorite)
+    print('result=',result)
     return result
 # ---------------------------------------------------------------
 
