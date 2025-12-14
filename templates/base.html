@@ -38,10 +38,20 @@
       <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet" />
       <!--Google Material Icons-->
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=favorite" />
         <!-- 프로젝트 고유 스크립트
              - 페이지 공통 JS 로직(이벤트 핸들러, 유틸 등)을 모아두는 위치 -->
     <script src="/static/js/app.js" defer></script>
-
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+</style>
     <!-- Google Charts 로더
          - 구글 차트 사용 시 필수 로더
          - 페이지 내에서 google.charts.load(), setOnLoadCallback() 패턴으로 사용 -->
@@ -68,11 +78,9 @@
 
       <div class="sub-menu">
         <ul class="menu">
+
           <li>
-            <a href="javascript:void(0)">Sign In</a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">My Favorite</a>
+            <a class="favorite">My Favorite</a>
           </li>
           <li>
             <a href="javascript:void(0)">Service</a>
@@ -152,164 +160,7 @@
 
 
             </div>
-<!--            <div class="contents__texture">-->
-<!--              <div class="inner">-->
-<!--                <h4>파이썬</h4>-->
-<!--                <p>파이썬 기초1</p>-->
-<!--                <p>파이썬 기초2</p>-->
-<!--                <h4>러닝머신</h4>-->
-<!--                <p>머신러닝1</p>-->
-<!--                <p>머신러닝2</p>-->
-<!--              </div>-->
-<!--            </div>-->
           </div>
-        </li>
-<!--        <li class="item">-->
-<!--          <div class="item__name">INTRODUCE</div>-->
-<!--          <div class="item__contents">-->
-<!--            <div class="contents__menu">-->
-<!--              <ul class="inner">-->
-<!--                <li>-->
-<!--                  <h4>파이썬</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                  <h4>파이썬2</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                  <h4>머신러닝1</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                  <h4>머신러닝2</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--            </div>-->
-<!--&lt;!&ndash;            <div class="contents__texture">&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="inner">&ndash;&gt;-->
-<!--&lt;!&ndash;                <h4>파이썬</h4>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>파이썬 기초1</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>파이썬 기초2</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <h4>러닝머신</h4>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>머신러닝1</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>머신러닝2</p>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--          </div>-->
-<!--        </li>-->
-<!--        <li class="item">-->
-<!--          <div class="item__name">INTRODUCE</div>-->
-<!--          <div class="item__contents">-->
-<!--            <div class="contents__menu">-->
-<!--              <ul class="inner">-->
-<!--                <li>-->
-<!--                  <h4>파이썬</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                  <h4>파이썬2</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                  <h4>머신러닝1</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                  <h4>머신러닝2</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--            </div>-->
-<!--&lt;!&ndash;            <div class="contents__texture">&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="inner">&ndash;&gt;-->
-<!--&lt;!&ndash;                <h4>파이썬</h4>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>파이썬 기초1</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>파이썬 기초2</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <h4>러닝머신</h4>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>머신러닝1</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>머신러닝2</p>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--          </div>-->
-<!--        </li>-->
-<!--        <li class="item">-->
-<!--          <div class="item__name">INTRODUCE</div>-->
-<!--          <div class="item__contents">-->
-<!--            <div class="contents__menu">-->
-<!--              <ul class="inner">-->
-<!--                <li>-->
-<!--                  <h4>파이썬</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                  <h4>파이썬2</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                  <h4>머신러닝1</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                  <h4>머신러닝2</h4>-->
-<!--                  <ul>-->
-<!--                    <li>aaa</li>-->
-<!--                    <li>bbb</li>-->
-<!--                    <li>ccc</li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </li>-->
 
     </ul>
 
@@ -322,9 +173,14 @@
 <main>
     <div class="status">0</div>
     <div class="selectForm">
+
         <div class="selectDong"><table class="dongTable"><tbody class="dongTbody"></tbody></table></div>
         <div class="selectApart"><table class="apartTable"><tbody class="apartTbody"></tbody></table></div>
-        <div class="selectDeal"><table class="dealTable"><tbody class="dealTbody"></tbody></table></div>
+        <div class="selectDeal">
+<!--            <span class="material-symbols-outlined checked">-->
+<!--            favorite-->
+<!--        </span>-->
+            <table class="dealTable"><tbody class="dealTbody"></tbody></table></div>
     </div>
 
     <div class="goNext">

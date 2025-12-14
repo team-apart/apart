@@ -20,6 +20,11 @@ const goNext=document.querySelector('.goNext')
 
 const left=goNext.querySelector('.leftArrow')
 const leftBtn=left.querySelector('img')
+
+const heart=document.querySelector('.material-symbols-outlined')
+
+const favorite=document.querySelector('.favorite')
+
 leftBtn.style.display="none"
 const right=goNext.querySelector('.rightArrow')
 const rightBtn=right.querySelector('img')
@@ -47,10 +52,14 @@ searchInputEl.addEventListener('change', async function (e) {
 
 
     createDealTable(result.data)
+    selectDeal.classList.add('display')
     searchInputEl.value=""
 
 })
-
+const selectedGu=[]
+const selectedDong=[]
+const selectedApart=[]
+let favorites=null
 
 leftBtn.addEventListener('click',function(){
 if(status.innerHTML>0 && status.innerHTML<=1){
@@ -59,15 +68,21 @@ if(status.innerHTML>0 && status.innerHTML<=1){
     selectDong.classList.remove('display')
     selectApart.classList.remove('display')
     selectDeal.classList.remove('display')
-//    selectedGu=[]
+    selectedDong.length=0
+    setTimeout(()=>{
 
+    },2000)
 
 }
 if(status.innerHTML>1 && status.innerHTML<=2){
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
     selectDeal.classList.remove('display')
-//    selectedDong=[]
+    selectedApart.length=0
+    setTimeout(()=>{
+
+    },2000)
+
 
     if(selectedDong.length>=1){
         rightBtn.style.display="block"
@@ -77,7 +92,10 @@ if(status.innerHTML>2 && status.innerHTML<=3){
     selectDong.classList.remove('display')
     selectApart.classList.add('display')
     selectDeal.classList.remove('display')
-//    selectedApart=[]
+    setTimeout(()=>{
+
+    },2000)
+
 if(selectedDong.length>=1){
         rightBtn.style.display="block"
         }
@@ -117,9 +135,7 @@ rightBtn.addEventListener('click',function(){
         selectedDealCommit()
     }
 })
-const selectedGu=[]
-const selectedDong=[]
-const selectedApart=[]
+
 
 
 function addRegion(city){
@@ -156,13 +172,14 @@ function selectAPT(apt){
 console.log('apt',apt)
     if(!selectedApart.includes(apt)){
         selectedApart.push(apt)
-
     }else{
-        selectedGu.splice(selectedApart.indexOf(apt),1)
+        selectedApart.splice(selectedApart.indexOf(apt),1)
 }}
+
 async function selectedDongCommit(){
     status.innerText=1
     const tableValues=[];
+    selectedDong.length=0;
     leftBtn.style.display="block"
     selectDong.classList.add('display')
     selectApart.classList.remove('display')
@@ -179,6 +196,9 @@ try{
 }
 
 function createDongTable(values){
+console.log('dongValues',values)
+values.map(value=>value.dong.sort());
+
     const tag=values.map(value=>{
     const tr=document.createElement('tr')
     const td=document.createElement('td')
@@ -237,25 +257,21 @@ function createDongTable(values){
 
 
 async function selectedApartCommit(){
-    // status.innerText=2
+
     const tableValues=[];
     apartTbody.innerHTML="";
-//    console.log('selectedDong',selectedDong)
 try{
     const aparts=await axios.get('http://localhost:8000/getApart')
-//    console.log('aparts',aparts)
-//    console.log('selectedDong',selectedDong)
+
     const results=selectedDong.map(dong=>aparts.data.filter(apart=>apart.name===dong))
     if(results.length===0)return;
-
-//    console.log('results',results)
     results.forEach(result=>result.forEach(re=>{tableValues.push(re)}))
-//    console.log('tableValues',tableValues)
     createApartTable(tableValues)
 }catch(e){console.error(e)}
 }
 function createApartTable(values){
-//    console.log('values',values)
+    console.log('apartValues',values)
+    values.map(value=>value.apart.sort());
     const tag=values.map(value=>{
     const tr=document.createElement('tr')
     const td=document.createElement('td')
@@ -290,7 +306,7 @@ function createApartTable(values){
     div.addEventListener('click',()=>{
         if(div.classList.contains('selected')){
             div.classList.remove(('selected'))
-            selectedApart.splice(selectedDong.indexOf(apt),1)
+            selectedApart.splice(selectedApart.indexOf(apt),1)
         }else{
             div.classList.add('selected')
             selectAPT(apt)
@@ -320,31 +336,40 @@ async function selectedDealCommit(){
     const tableValues=[];
     dealTbody.innerHTML="";
 
+
 try{
     console.log('selectedApart',selectedApart)
     const deals=await axios.post('http://localhost:8000/getDeals',selectedApart)
     totaldeals=deals['data']
-//    const results=selectedApart.map(apt=>deals.data.filter(deal=>deal.aptName.replace(deal.dongName,"")===apt))
-//
-//
-//    console.log('results',results)
-//    results.forEach(result=>result.forEach(re=>{tableValues.push(re)}))
-//    console('tableValues',tableValues)
+    if(totaldeals.length===0){
+    alert('거래내역이 없습니다.')
+    selectApart.classList.add('display')
+    selectDeal.classList.remove('display')
+    document.querySelectorAll('.dong').forEach(el=>{
+    el.classList.remove('selected')})
+    selectedApart.length=0
+    status.innerText=2
+    return;
+    }
     createDealTable(totaldeals)
 }catch(e){console.error(e)}
 }
 //------------------------------------------------------------------------------
 function createDealTable(values){
-//    console.log('values',values)
+    console.log('totaldeals',values)
+
+    dealTbody.innerHTML=""
     values.sort((a,b)=>
     a.area-b.area)
-    const tag=values.map(value=>{
+    const tag=values.map((value,index)=>{
     const tr=document.createElement('tr')
     tr.style.display="flex";
     tr.style.alignItems="flex-end";
 
+
     const td=document.createElement('td')
     const image=document.createElement('img')
+
     td.style.fontSize="20px"
     td.style.border="2px solid black"
     td.style.height="200px";
@@ -353,11 +378,57 @@ function createDealTable(values){
     td.style.justifyContent="flex-end";
     td.style.alignItems="center";
     td.style.flexDirection="column"
+    td.style.position='relative'
+    const favorite=document.createElement('span')
+    favorite.style.position='absolute'
+    favorite.style.top=0
+    favorite.style.right=0
+    favorite.classList.add("material-symbols-outlined")
+    favorite.innerText='favorite'
+    console.log('value',value)
+    console.log('favorites',favorites)
+    favorites.forEach(fav=>{
+
+    console.log(value.dong===fav.dong)
+    console.log(value.apart===fav.apart)
+    console.log(value.area===fav.area)
+    console.log(value.dong===fav.dong&&value.apart===fav.apart&&value.area===fav.area)
+    if(fav.dong===value.dong && fav.apart===value.apart &&
+    fav.area===value.area){favorite.classList.add('checked')
+    }else{ favorite.classList.remove('checked')
+    }
+    })
+
+
+//    if(value.fav===true){
+//    favorite.classList.add('checked')
+//    }else{
+//    favorite.classList.remove('checked')
+//    }
+
+
+
+    td.append(favorite)
+    favorite.addEventListener('click',async function(){
+    if(this.classList.contains('checked')){
+    this.classList.remove('checked')
+    deal=JSON.stringify({...values[index],fav:true})
+    result=await axios.post('http://localhost:8000/favorite_del',deal)
+    }else{
+    this.classList.add('checked')
+    deal=JSON.stringify({...values[index],fav:true})
+    console.log(deal)
+    result=await axios.post('http://localhost:8000/favorite',deal)
+    }
+    })
 
 //    td///////////////////////////////////////동 입력
     p=document.createElement('p')
     p.innerText=value.dong
     td.append(p)
+
+
+
     p=document.createElement('p')
     p.innerText=value.apart.replace(value.dong,"")
     td.append(p)
@@ -365,6 +436,7 @@ function createDealTable(values){
     unit=document.createElement('sup')
     p.innerText=value.area+"m2"
     td.append(p)
+
 
 
 //    image.src="/static/img/mascot/"+value.name+".png";
@@ -392,14 +464,10 @@ function createDealTable(values){
     });
 
 const maxValue = value.deals.reduce((max, item) => item.avg > max ? item.avg : max, -Infinity);
-const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : min, -Infinity);
-
+const minValue = value.deals.reduce((min, item) => item.avg < min ? item.avg : min, 50);
 console.log('maxValue',maxValue)
-
-
-
+console.log('minValue',minValue)
     value.deals.forEach(deal=>{
-
     bar=document.createElement('div');
     bar.style.marginLeft="10px";
     bar.style.background="blue";
@@ -415,23 +483,10 @@ console.log('maxValue',maxValue)
         bar.style.height=(deal.avg/1000/2.3).toString()+"px"
     }else if((maxValue/1000)>200){
         bar.style.height=(deal.avg/1000-130).toString()+"px"
-     }else if((maxValue/1000)>150){
-        bar.style.height=((deal.avg/1000)-100).toString()+"px"
-    }else if((maxValue/1000)<50){
+     }else if((minValue)<60){
         bar.style.height=(deal.avg/1000+50).toString()+"px"
     }
-//    else if((maxValue/1000)>170){
-//        bar.style.height=(deal.avg/1000-70).toString()+"px"
-//    }else if((minValue/1000)<80){
-//        bar.style.height=(deal.avg/1000+60).toString()+"px"
-//    }else if((minValue/1000)<110){
-//        bar.style.height=(deal.avg/1000+30).toString()+"px"
-//    }else
-//    {
-//        bar.style.height=(deal.avg/1000).toString()+"px"
-//    }
-//////////////////////////////////////////////////////////////////
-//bar.style.height=(deal.avg/1000+50).toString()+"px"
+
     bar.style.width="50px"
     bar.style.display="flex"
     bar.style.flexDirection="column"
@@ -472,3 +527,21 @@ console.log('maxValue',maxValue)
 //    selectDeal.classList.add('display')
     })
 }
+favorite.addEventListener('click',async()=>{
+    if(favorites.length>0){
+        createDealTable(favorites)
+        selectDeal.classList.add('display')
+        selectApart.classList.remove('display')
+        selectDong.classList.remove('display')
+    }
+})
+
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const result=await axios.get("http://localhost:8000/getFavorite")
+        data=result.data.map(res=>JSON.parse(res.favorite))
+        favorites=data
+    } catch (err) {
+        console.error("API 호출 실패:", err);
+    }
+});
