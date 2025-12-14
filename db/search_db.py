@@ -25,7 +25,7 @@ def get_deal_apart(apart: str):
 
         sql="""
            SELECT  
-    t.ID,
+    
     t.GU_NM,
     t.DONG_NM,
     t.APART_NM,
@@ -35,7 +35,7 @@ def get_deal_apart(apart: str):
     t.average
 FROM (
     SELECT 
-        DEAL.ID,
+        
         SIGUDONG.GU_NM,
         SIGUDONG.DONG_NM,
         APART.APART_NM,
@@ -50,10 +50,9 @@ FROM (
         ) AS rn
     FROM DEAL 
     JOIN APART ON DEAL.APART_CD = APART.APART_CD
-    JOIN SIGUDONG ON SIGUDONG.DONG_CD = DEAL.DONG_CD
+    JOIN SIGUDONG ON DEAL.GU_CD=SIGUDONG.GU_CD AND  SIGUDONG.DONG_CD = DEAL.DONG_CD
     WHERE APART.APART_NM LIKE %s
     GROUP BY 
-        DEAL.ID,
         SIGUDONG.GU_NM,
         SIGUDONG.DONG_NM,
         APART.APART_NM,
